@@ -3,14 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>TKU 午夜任務｜規則怪談×校園鬼故事</title>
-  <meta name="description" content="TKU校園規則怪談×都市傳說｜18題RPG心理測驗｜手機單手友善｜最後揭曉最適合的畢業專題類型" />
+  <title>TKU 午夜任務｜規則怪談×校園鬼故事（18題RPG）</title>
+  <meta name="description" content="TKU校園規則怪談×都市傳說｜18題RPG心理測驗｜手機友善｜最後揭曉最適合的畢業專題類型" />
+
   <style>
     :root{
-      --bg:#070a14;
-      --card:#0e1530;
+      --bg:#060812;
+      --card:#0d1430;
       --text:#eef1ff;
-      --muted:#b2b9e6;
+      --muted:#aeb6e9;
       --line:rgba(255,255,255,.12);
       --accent:#90d2ff;
       --accent2:#b7ffcc;
@@ -29,7 +30,7 @@
         radial-gradient(900px 900px at 50% 100%, rgba(160,140,255,.08), transparent 60%),
         var(--bg);
       color:var(--text);
-      overflow:hidden; /* 手機不捲動 */
+      overflow:hidden; /* 整頁不捲動 */
     }
     .app{
       height:100dvh;
@@ -37,7 +38,7 @@
       display:flex;
       flex-direction:column;
       gap:12px;
-      max-width: 860px;
+      max-width: 900px;
       margin:0 auto;
     }
     header{
@@ -58,7 +59,7 @@
       font-size:12px;
       line-height:1.4;
       margin-top:6px;
-      max-width: 54ch;
+      max-width: 58ch;
     }
     .chips{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end}
     .chip{
@@ -70,6 +71,7 @@
       border-radius:999px;
       user-select:none;
     }
+
     .card{
       flex:1;
       display:flex;
@@ -90,7 +92,7 @@
       border-bottom:1px solid var(--line);
       background: rgba(0,0,0,.12);
     }
-    .where{ display:flex; flex-direction:column; gap:3px; min-width:0; }
+    .where{display:flex; flex-direction:column; gap:3px; min-width:0;}
     .where .k{
       font-size:11px;
       color:var(--accent);
@@ -112,11 +114,7 @@
       gap:6px;
       min-width: 140px;
     }
-    .prog .count{
-      color:var(--muted);
-      font-size:11px;
-      white-space:nowrap;
-    }
+    .prog .count{color:var(--muted); font-size:11px; white-space:nowrap;}
     .bar{
       width: 160px;
       max-width: 38vw;
@@ -133,6 +131,7 @@
       background: linear-gradient(90deg, rgba(144,210,255,.95), rgba(183,255,204,.95));
       transition: width .25s ease;
     }
+
     .content{
       flex:1;
       display:flex;
@@ -144,13 +143,15 @@
         radial-gradient(600px 300px at 70% 0%, rgba(183,255,204,.06), transparent 60%),
         rgba(0,0,0,.06);
     }
+
     .story{
       flex:1;
       border:1px solid var(--line);
       background: rgba(0,0,0,.20);
       border-radius: 16px;
       padding: 12px;
-      overflow:hidden; /* 不捲動 */
+      overflow:auto; /* 只在框內捲，不整頁滑 */
+      -webkit-overflow-scrolling: touch;
       display:flex;
       flex-direction:column;
       gap:10px;
@@ -163,7 +164,6 @@
       white-space:pre-wrap;
     }
     .p.muted{ color: var(--muted); font-size: 13px; line-height: 1.45;}
-    .p.small{ font-size: 13px; color: var(--muted); }
     .divider{ height:1px; background: var(--line); margin: 2px 0; }
     .question{
       font-size: 16px;
@@ -171,6 +171,28 @@
       line-height: 1.35;
       margin:0;
     }
+
+    .alert{
+      border:1px solid rgba(255,140,140,.35);
+      background: rgba(255,140,140,.10);
+      border-radius: 14px;
+      padding: 10px 10px;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+    }
+    .alert .bang{
+      width:28px; height:28px;
+      border-radius: 12px;
+      display:grid; place-items:center;
+      font-weight: 1000;
+      border:1px solid rgba(255,140,140,.45);
+      color: var(--danger);
+      background: rgba(255,140,140,.10);
+      flex:0 0 auto;
+    }
+    .alert .msg{font-size: 13px; line-height:1.45; color: var(--text); white-space:pre-wrap;}
+
     .choices{ display:grid; gap:10px; }
     .btn{
       width:100%;
@@ -239,10 +261,12 @@
       background: rgba(0,0,0,.20);
       border-radius: 16px;
       padding: 12px;
-      overflow:hidden;
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
       display:flex;
       flex-direction:column;
       gap:10px;
+      max-height: 100%;
     }
     .badge{
       display:inline-flex;
@@ -278,10 +302,9 @@
     }
     .sitem strong{ color: var(--text); font-size: 12px; }
 
-    /* 氣氛：漂浮光點 */
     .ghost{
       position:absolute;
-      inset:auto 12px 150px auto;
+      inset:auto 14px 150px auto;
       width:10px; height:10px;
       border-radius:50%;
       background: rgba(183,255,204,.65);
@@ -301,15 +324,20 @@
   <div class="app">
     <header>
       <div>
-        <div class="h1">TKU 午夜任務</div>
-        <div class="h2">規則怪談×校園鬼故事｜最後揭曉最適合的畢業專題類型</div>
+        <div class="h1">TKU 午夜任務：宮燈姊姊</div>
+        <div class="h2">規則怪談×校園鬼故事｜18題RPG心理測驗｜規則會「回收」你做過的事｜最後揭曉結果</div>
+      </div>
+      <div class="chips">
+        <div class="chip">18題固定</div>
+        <div class="chip">不整頁滑</div>
+        <div class="chip">違規會出事</div>
       </div>
     </header>
 
     <section class="card" aria-live="polite">
       <div class="topbar">
         <div class="where">
-          <div class="k" id="kicker">序章</div>
+          <div class="k" id="kicker">午夜任務</div>
           <div class="t" id="place">校門口的霧</div>
         </div>
         <div class="prog">
@@ -321,7 +349,8 @@
       <div class="content">
         <div class="ghost" aria-hidden="true"></div>
 
-        <div class="story">
+        <div class="story" id="storyBox">
+          <div id="consequenceBox" style="display:none;"></div>
           <p class="p" id="storyText"></p>
           <div class="divider"></div>
           <p class="question" id="questionText"></p>
@@ -333,11 +362,10 @@
 
       <div class="foot">
         <div class="mini">
-          <button class="mbtn primary" id="startBtn">開始</button>
           <button class="mbtn" id="backBtn" disabled>返回</button>
-          <button class="mbtn danger" id="restartBtn" disabled>重來</button>
+          <button class="mbtn danger" id="restartBtn">重來</button>
         </div>
-        <div class="mtext" id="microText">提示：選你最像的反應，不用想「正確答案」。</div>
+        <div class="mtext" id="microText">提示：選你最像的反應，不用選「看起來最安全」的。</div>
       </div>
     </section>
   </div>
@@ -351,6 +379,7 @@
   function initScores(){ const s={}; TYPES.forEach(k=>s[k]=0); return s; }
   function cloneScores(s){ const o={}; TYPES.forEach(k=>o[k]=s[k]); return o; }
   function applyScore(scoreObj){ if(!scoreObj) return; for(const k of Object.keys(scoreObj)) state.scores[k]+=scoreObj[k]; }
+
   function escapeHtml(str){ return (str??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m])); }
 
   function typeName(k){
@@ -366,360 +395,519 @@
   }
 
   const RESULTS = {
-    R:{
-      badge:"你會先問：規則怎麼證明？線索在哪？",
+    R:{ badge:"你會先問：規則怎麼證明？線索在哪？",
       title:"【結果】最適合：學術論文",
-      body:
-`你在恐怖場景裡最像「冷靜拆解派」：會先確認、先定位、先整理出可驗證的規則。\n\n你適合做「學術論文」類型的畢業專題。\n你強項：聚焦題目、找文獻、做框架、把模糊變清楚。\n你需要：固定進度節奏、資料管理、不要拖到最後爆炸。`
-    },
-    T:{
-      badge:"你會把緊張轉成『演得過去』的節奏。",
+      body:`你在高壓時最自然會「拆解規則、找證據、做框架」。\n\n你適合做學術論文。\n強項：聚焦題目、找文獻、建立架構、把模糊變清楚。\n提醒：給自己一個固定節奏，不要拖到最後一週爆炸。` },
+    T:{ badge:"你會把緊張轉成『撐得住場面』的節奏。",
       title:"【結果】最適合：戲劇公演",
-      body:
-`你遇到怪事不一定最理性，但你很會「用表現」把場面撐住：大喊、帶氣氛、用幽默或氣勢壓回去。\n\n你適合做「戲劇公演」類型的畢業專題。\n你強項：節奏感、臨場、團隊溝通、排練耐性。\n你需要：分工明確、準時、把細節磨到位。`
-    },
-    C:{
-      badge:"你腦中會立刻浮出：這可以改成作品。",
+      body:`你很會用表現把場面穩住：氣勢、節奏、現場感。\n\n你適合做戲劇公演。\n強項：臨場、溝通、排練耐性、帶氣氛。\n提醒：細節要磨，分工要清楚，準時很重要。` },
+    C:{ badge:"你腦中會立刻浮出：這可以改成作品。",
       title:"【結果】最適合：創作",
-      body:
-`你最像「靈感改寫派」：越毛越有畫面，越怪越想把它收束成一個好看的結局。\n\n你適合做「創作」類型的畢業專題（文章/影片/企劃/作品等）。\n你強項：世界觀、橋段、畫面感、快速產出雛形。\n你需要：不要只想，要做；先做出版本，再迭代。`
-    },
-    WT:{
-      badge:"你對字句跟規則很敏感：不清楚就不安心。",
+      body:`你會把毛的東西改寫成更好看的橋段。\n\n你適合做創作（文章/影片/企劃/作品）。\n強項：世界觀、畫面感、靈感、快速產出雛形。\n提醒：先做出一版，再迭代；不要只停在想。` },
+    WT:{ badge:"你對字句跟規則很敏感：不一致就很刺。",
       title:"【結果】最適合：翻譯（筆譯）",
-      body:
-`你最像「細節潔癖派」：會記規則、會抓措辭、會在意一致性與上下文。\n\n你適合做「翻譯（筆譯）」類型的畢業專題。\n你強項：用詞一致、譯注、版本管理、反覆潤稿。\n你需要：耐心與時間、固定校對流程、別跟自己過不去。`
-    },
-    IT:{
-      badge:"你會先讓事情『順利往前走』，然後再補細節。",
+      body:`你重視一致性、上下文與細節，擅長把混亂的句子整理到可交付。\n\n你適合做筆譯。\n強項：用詞一致、譯注、校對、版本管理。\n提醒：留時間給反覆潤稿，不要把校對壓到最後。` },
+    IT:{ badge:"你會先讓事情『順利往前走』，再補細節。",
       title:"【結果】最適合：翻譯（口譯）",
-      body:
-`你最像「降溫救場派」：敢說、敢問、敢把場面救回來；越緊張越能講清楚。\n\n你適合做「翻譯（口譯）」類型的畢業專題。\n你強項：臨場反應、抓重點、表達清楚、壓力管理。\n你需要：大量情境練習、錄音回聽、固定筆記系統。`
-    },
-    E:{
-      badge:"你腦中自帶『整理成可讀版本』的編排感。",
+      body:`你在壓力下反而會更想把場面救回來：敢說、敢問、敢收束。\n\n你適合做口譯。\n強項：抓重點、臨場反應、表達清楚、壓力管理。\n提醒：大量情境練習＋錄音回聽會讓你進步很快。` },
+    E:{ badge:"你腦中自帶『整理成可讀版本』的編排感。",
       title:"【結果】最適合：雜誌編輯",
-      body:
-`你最像「把混亂排成順序的人」：會蒐證、會整理、會想讀者看不看得懂。\n\n你適合做「雜誌編輯」類型的畢業專題。\n你強項：主題策劃、排版流程、校對、死線管理。\n你需要：清楚的稿件流程與分工、不要一次想做太大。`
-    },
-    G:{
-      badge:"你下意識會先帶路、先讓大家安心。",
+      body:`你會自然去想：怎麼整理、怎麼排、讀者怎麼看得懂。\n\n你適合做雜誌編輯。\n強項：策劃、分鏡/結構、稿件流程、死線管理。\n提醒：先做小而完整的一期/一套，再慢慢擴張。` },
+    G:{ badge:"你下意識會先帶路、先讓大家安心。",
       title:"【結果】最適合：觀光導覽",
-      body:
-`你最像「帶隊領航派」：遇到怪事第一反應是找人、找亮的地方、找出口、讓隊伍不要散。\n\n你適合做「觀光導覽」類型的畢業專題。\n你強項：導覽節奏、互動設計、臨場應變、說故事能力。\n你需要：腳本、路線規劃、備案，還有膽量面對突發狀況。`
-    }
+      body:`你會找亮處、找路線、找同伴，把恐懼變成「可走的路」。\n\n你適合做觀光導覽。\n強項：說故事、互動、臨場應變、路線規劃。\n提醒：腳本＋備案＋現地踩點，會讓你超強。` },
   };
 
+  // 規則（逐步被你知道）
+  const RULES = {
+    NO_TIME: {name:"不要主動說出時間"},
+    NO_ID:   {name:"不要確認對方身份"},
+    NO_FLASH:{name:"不要開閃光拍照"},
+    NO_FINE: {name:"不要急著說『我沒事』"},
+    NO_TURN: {name:"第三盞宮燈下不要回頭"}
+  };
+
+  let state = {
+    step: 0,
+    nodeId: "s0",
+    history: [],
+    scores: initScores(),
+
+    flags:{
+      tookPhoto:false,
+      usedFlash:false,
+      saidTime:false,
+      askedIdentity:false,
+      saidImFine:false,
+      turnedBackAtLantern:false
+    },
+
+    knownRules: new Set(),   // 你已經「知道」的規則才算真的違規
+    haunt: 0,                // 違規/事件累積值：越高越毛
+    lastConsequence: null    // 當下違規就立刻顯示
+  };
+
+  // ✅ 18 題固定：每一步一個節點
+  // 每個 choice 可以：
+  // - score: 加分到 7 類型
+  // - setFlags: 設定玩家行為
+  // - learnRules: 讓玩家「知道」某條規則
+  // - violates: 若玩家已知該規則，立即觸發「出事」
+  // - next: 下一題 id
   const NODES = {
-    q0:{
+    s0:{
+      idx:0,
       place:"校門口的霧",
       story:
-`你站在淡江校門口。\n霧很重，像有人把校園「包起來」了。\n手機跳出一則未讀訊息（沒有來電顯示）：\n「今晚完成『午夜任務』，你就會知道自己適合走哪條路。\n不要把任務說出口。\n如果你想放棄——你會發現門打不開。」\n\n你第一個反應是？`,
-      question:"你會怎麼開始？",
-      hint:"（選你最像的反應，不用想正確答案。）",
+`你站在淡江校門口。\n霧重得不合理，像有人把校園「封起來」。\n手機跳出一則未讀訊息（沒有發送者）：\n「完成午夜任務，你就會知道自己適合走哪條路。\n不要把任務說出口。」`,
+      question:"你第一個反應？",
+      hint:"選你最像的反應，不用選看起來最安全的。",
       choices:[
-        {label:"先確認：我先看時間、電量、身上有沒有行動電源。", next:"q1", score:{R:1,WT:1}},
-        {label:"先找人：我傳訊息問朋友有沒有人還在學校/宿舍。", next:"q1", score:{G:1,IT:1}},
-        {label:"先拍一下：這霧太像傳說場景了，我想留個證據。", next:"q1", score:{E:1,C:1}},
-        {label:"先裝沒事：我就當自己只是走夜路，別想太多。", next:"q1", score:{T:1,G:1}},
+        {label:"先確認：時間、電量、行動電源、耳機。", next:"s1", score:{R:1,WT:1}},
+        {label:"先找同伴：傳訊息問同學有沒有人在附近。", next:"s1", score:{G:1,IT:1}},
+        {label:"先拍一下：霧太像傳說場景，我想留證據。", next:"s1", score:{E:1,C:1}, setFlags:{tookPhoto:true}},
+        {label:"先裝沒事：當自己只是晚歸，別想太多。", next:"s1", score:{T:1,G:1}},
       ]
     },
 
-    q1:{
+    s1:{
+      idx:1,
       place:"海報牆",
       story:
-`你走過海報牆。\n昏黃燈下，有一張很舊的活動海報突然自己鬆開，滑到你腳邊。\n海報上寫著：\n「不要在海報前念出年份。」\n\n但海報日期偏偏印得超大，像故意要你看。`,
-      question:"你會怎麼處理？",
-      hint:"這裡開始有第一條規則味道，但還不確定真假。",
+`你經過海報牆。\n一張很舊的活動海報突然「滑」到你腳邊。\n海報角落用鉛筆寫：\n「不要念出年份。」\n\n你看得出來：這不是官方印的，是有人後來加上去的。`,
+      question:"你會怎麼做？",
+      hint:"這裡是第一個『規則被你看見』的地方。",
       choices:[
-        {label:"把年份遮住：我用手蓋住再看內容，避免自己順口念出來。", next:"q2", score:{WT:1,R:1}},
-        {label:"拍照留存：我不念出來，但我想記下海報長什麼樣。", next:"q2", score:{E:1,C:1}},
-        {label:"覺得毛：我直接踢開海報，不碰它，快走。", next:"q2", score:{G:1}},
-        {label:"反其道而行：我小聲念出年份，想測規則真假。", next:"q2", score:{C:1,T:1}},
+        {label:"不念出來：我用手遮住年份再看內容。", next:"s2", score:{WT:1,R:1}},
+        {label:"拍照留存：不念，但我想留個備份。", next:"s2", score:{E:1,C:1}},
+        {label:"覺得毛：我繞開、不碰，直接走。", next:"s2", score:{G:1}},
+        {label:"測試：我小聲念出年份，看看會不會怎樣。", next:"s2", score:{C:1,T:1},
+          learnRules:["NO_FINE"], // 讓它開始「回收」心態
+          violates:["NO_FINE"],   // 若你已知 NO_FINE 才算違規（這題第一次知道，所以不會立即出事）
+        },
       ]
     },
 
-    q2:{
-      place:"宮燈大道（第三盞）",
-      story:
-`你踏上宮燈大道。\n走到第三盞宮燈下，燈光突然跳了一下。\n身後傳來一個很溫柔、很有禮貌的女聲：\n「同學，不好意思…可以請你告訴我現在幾點嗎？」\n\n你正要轉身，燈罩裡又冒出另一個聲音——像廣播，沒有情緒：\n「提示：請勿主動說出現在時間。」\n\n同一個人，兩種聲音。`,
-      question:"你怎麼反應最像你？",
-      hint:"",
+    s2:{
+      idx:2,
+      place:"宮燈大道｜第三盞",
+      story: () => {
+        const photoLine = state.flags.tookPhoto
+          ? `你剛剛拍過照，手機相簿縮圖裡有一格黑掉，像被塗掉。\n`
+          : ``;
+        return (
+`你走上宮燈大道，霧更濃了。\n` +
+photoLine +
+`第三盞宮燈下，燈光跳了一下。\n\n身後傳來溫柔的女聲：\n「同學，不好意思…可以告訴我現在幾點嗎？」\n\n下一秒，同一句話變成廣播式、毫無感情：\n「提示：請勿主動說出現在時間。」\n\n（你清楚地『知道』第一條硬規則了。）`
+        );
+      },
+      question:"你怎麼反應？",
+      hint:"宮燈姊姊：溫柔↔廣播式切換（最毛）。",
       choices:[
-        {label:"不回頭、不回答：我加快走，當沒聽到。", next:"q3", score:{WT:1,R:1}},
-        {label:"回答但不報時間：『抱歉我趕時間…』然後走。", next:"q3", score:{IT:1,G:1}},
-        {label:"回頭直視：我想看清楚她到底是誰。", next:"q3", score:{T:1,C:1}},
-        {label:"我先反問：『你是誰？你為什麼問？』", next:"q3", score:{IT:1,T:1}},
+        {label:"不回頭、不回答：我加快走。", next:"s3", score:{WT:1,R:1}, learnRules:["NO_TIME","NO_TURN"]},
+        {label:"不報時間：『抱歉我趕時間』然後走。", next:"s3", score:{IT:1,G:1}, learnRules:["NO_TIME","NO_TURN"]},
+        {label:"回頭直視：我想看清楚她到底是誰。", next:"s3", score:{T:1,C:1},
+          learnRules:["NO_TIME","NO_TURN"],
+          setFlags:{turnedBackAtLantern:true},
+          violates:["NO_TURN"]
+        },
+        {label:"我直接回答時間（很短）：『…十二點。』", next:"s3", score:{IT:1,T:1},
+          learnRules:["NO_TIME","NO_TURN"],
+          setFlags:{saidTime:true},
+          violates:["NO_TIME"]
+        },
       ]
     },
 
-    q3:{
-      place:"黑天鵝附近",
-      story:
-`你離開第三盞沒多久，附近突然「啪」一聲。\n有黑影掠過你頭頂，像鳥，但大得不合理。\n你沒被打到，可是背脊瞬間起雞皮疙瘩。\n\n你會怎麼做？`,
-      question:"第一反應？",
-      hint:"這題很現實：你是躲？吼？觀察？還是用怪招？",
+    s3:{
+      idx:3,
+      place:"宮燈大道轉角",
+      story: () => {
+        const extra = state.haunt>=1
+          ? `\n你耳邊像有人貼著你說話，聲音又溫柔又像廣播：\n「已記錄。」`
+          : ``;
+        return (
+`你離開第三盞，轉過轉角。\n樹上突然「啪」一聲，一隻烏鴉黑影掠過你頭頂。\n你沒被打到，但你很確定：牠是故意靠很近。\n`+extra
+        );
+      },
+      question:"你第一反應？",
+      hint:"真人反應題：躲、吼、觀察、或用道具。",
       choices:[
-        {label:"先閃避：蹲下/護頭/立刻拉開距離。", next:"q4", score:{G:1,IT:1}},
-        {label:"用氣勢：我大吼一聲＋揮手趕走。", next:"q4", score:{T:1}},
-        {label:"先觀察：我停一下看它到底攻擊誰、從哪來。", next:"q4", score:{R:1}},
-        {label:"用誘餌/道具：我丟水瓶/麵包吸引它，趁機走。", next:"q4", score:{C:1,E:1}},
+        {label:"先閃避：蹲下/護頭/拉開距離。", next:"s4", score:{G:1,IT:1}},
+        {label:"用氣勢：我大吼一聲趕走。", next:"s4", score:{T:1}},
+        {label:"先觀察：停一下看牠到底衝哪裡。", next:"s4", score:{R:1}},
+        {label:"用道具：丟水瓶轉移注意，趁機走。", next:"s4", score:{C:1,E:1}},
       ]
     },
 
-    q4:{
-      place:"外語大樓走廊",
+    s4:{
+      idx:4,
+      place:"文化教室｜半開門",
       story:
-`你進入外語大樓。\n走廊只亮一半，另一半是暗的。\n前方有清潔阿姨在拖地，但她一直拖同一塊地，像卡住。\n\n你靠近時，她用很小聲的溫柔語氣說：\n「同學…不要走到『黑的那邊』。」\n下一秒，她聲音又變成廣播式：\n「提示：請勿與清潔人員確認身份。」`,
-      question:"你怎麼處理最像你？",
-      hint:"你會打招呼嗎？還是完全不碰？",
+`你走到文化教室那排。\n一間教室門半開，裡面有人在上課——而且是日文。\n座位背影全都坐得很端正，沒人滑手機，反而更不真實。\n\n講台上的聲音忽然停了一秒，像在聽你有沒有靠近。`,
+      question:"你會怎麼做？",
+      hint:"這題重點是：你會不會『確認』。",
       choices:[
-        {label:"不打招呼：我貼牆走、放輕腳步，快速通過。", next:"q5", score:{WT:1}},
-        {label:"禮貌一句就走：『阿姨辛苦了』，不問任何事。", next:"q5", score:{G:1,IT:1}},
-        {label:"想幫忙：我問『需要幫忙嗎？』但保持距離。", next:"q5", score:{G:1}},
-        {label:"我會記下規則：不問身份這點很怪，我想留做線索。", next:"q5", score:{R:1,E:1}},
+        {label:"先觀察5秒：我想確定是不是有人拍片或惡作劇。", next:"s5", score:{R:1,WT:1}},
+        {label:"我直接離開：不該看的不看。", next:"s5", score:{G:1}},
+        {label:"敲門問一句：『請問現在是什麼課？』", next:"s5", score:{IT:1,T:1},
+          learnRules:["NO_ID"], setFlags:{askedIdentity:true}, violates:["NO_ID"]
+        },
+        {label:"偷偷錄3秒：不開聲音、不開閃光，純留證據。", next:"s5", score:{E:1},
+          // 錄影會讓你更「容易被回收」，不算違規，但會提高毛感
+        },
       ]
     },
 
-    q5:{
-      place:"文化教室的半開門",
-      story:
-`你經過一間半開門的文化教室。\n裡面有人在上課，聽得出是「日文」。\n但時間是凌晨。\n你從門縫看到：學生背影全都坐得很端正，一點小動作都沒有，反而很不真實。\n\n你會？`,
-      question:"你怎麼做？",
-      hint:"這題要選你真的會做的事。",
+    s5:{
+      idx:5,
+      place:"外語大樓｜走廊一半亮一半暗",
+      story: () => {
+        const lead = `你進入外語大樓。\n走廊一半亮、一半暗。\n前方有清潔阿姨拖地，卻一直拖同一塊。\n`;
+        const warn = `\n她用很溫柔的語氣說：\n「同學…不要走到『黑的那邊』。」\n下一秒，聲音像廣播：\n「提示：請勿與清潔人員確認身份。」\n（你清楚地『知道』：不要確認身份。）`;
+        const photoRule = state.flags.tookPhoto
+          ? `\n你手機相機圖示自己亮了一下。\n同一個廣播聲補了一句：\n「提示：請勿開閃光拍照。」\n（你也『知道』：不要開閃光。）`
+          : ``;
+        return lead + warn + photoRule;
+      },
+      question:"你怎麼通過這段走廊？",
+      hint:"你會打招呼？會問？還是完全不碰？",
       choices:[
-        {label:"先觀察5秒：我想確定是不是有人惡作劇或拍片。", next:"q6", score:{R:1,WT:1}},
-        {label:"我直接離開：不該看的不看，先走。", next:"q6", score:{G:1}},
-        {label:"敲門問一句：『請問現在是什麼課？』", next:"q6", score:{IT:1,T:1}},
-        {label:"偷偷錄個3秒：不解釋、不曝光，純粹留證據。", next:"q6", score:{E:1}},
+        {label:"不打招呼：貼牆走、放輕腳步快速通過。", next:"s6", score:{WT:1}, learnRules:["NO_ID", ...(state.flags.tookPhoto?["NO_FLASH"]:[])]},
+        {label:"禮貌一句就走：『阿姨辛苦了』不問任何事。", next:"s6", score:{G:1,IT:1}, learnRules:["NO_ID", ...(state.flags.tookPhoto?["NO_FLASH"]:[])]},
+        {label:"我想問路：『請問哪邊比較亮？』但不問你是誰。", next:"s6", score:{IT:1,G:1}, learnRules:["NO_ID", ...(state.flags.tookPhoto?["NO_FLASH"]:[])]},
+        {label:"我忍不住問：『阿姨你怎麼這麼晚還在？』", next:"s6", score:{T:1},
+          learnRules:["NO_ID", ...(state.flags.tookPhoto?["NO_FLASH"]:[])],
+          setFlags:{askedIdentity:true},
+          violates:["NO_ID"]
+        },
       ]
     },
 
-    q6:{
-      place:"商管大樓電梯",
+    s6:{
+      idx:6,
+      place:"外語大樓｜樓梯間",
+      story: () => {
+        const extra = state.flags.tookPhoto
+          ? `你看著手機想拍一下走廊。\n你想起剛剛那句：不要開閃光。\n`
+          : `你握緊手機，突然很怕它在這裡沒訊號。\n`;
+        return (
+`你躲進樓梯間。\n門關上的瞬間，外面拖地聲停了。\n`+
+extra+
+`樓梯間的告示板上貼著一張新紙：\n「不要急著說『我沒事』。」\n（你『知道』這句話會被回收。）`
+        );
+      },
+      question:"此刻你最像哪種反應？",
+      hint:"這題很真實：你會先安撫自己？還是先處理現實？",
+      choices:[
+        {label:"先把路線弄清楚：我看出口、樓層、再決定往哪走。", next:"s7", score:{R:1,G:1}, learnRules:["NO_FINE"]},
+        {label:"先傳訊息：報備『我還在學校裡』但不講任務。", next:"s7", score:{G:1,IT:1}, learnRules:["NO_FINE"]},
+        {label:"我會下意識說出口：『我沒事啦…』", next:"s7", score:{T:1},
+          learnRules:["NO_FINE"],
+          setFlags:{saidImFine:true},
+          violates:["NO_FINE"]
+        },
+        {label:"先深呼吸：我不說話，先讓自己穩住再走。", next:"s7", score:{WT:1,C:1}, learnRules:["NO_FINE"]},
+      ]
+    },
+
+    s7:{
+      idx:7,
+      place:"D棟｜電梯口",
       story:
-`你進商管大樓想去5樓。\n電梯門開到一個「沒有樓層顯示」的黑走廊。\n你直覺：這不是正常樓層。\n\n你會怎麼辦？`,
-      question:"你下一步？",
+`你走到D棟。\n電梯自己「叮」一聲開了。\n裡面沒人。\n但你聽到很壓抑的哭聲，像從電梯井深處傳上來。\n\n你突然想到：這種時候最容易犯的錯是「確認」。`,
+      question:"你會怎麼做？",
+      hint:"避開、觀察、尊重、或出聲安撫。",
+      choices:[
+        {label:"避開電梯：走樓梯，離它遠一點。", next:"s8", score:{WT:1,G:1}},
+        {label:"靠近看一下：但我不問『你是誰』，只看。", next:"s8", score:{R:1}},
+        {label:"鞠躬道歉：『打擾了』，然後離開。", next:"s8", score:{G:1}},
+        {label:"出聲安撫：『你需要幫忙嗎？我可以帶你出去。』", next:"s8", score:{IT:1,G:1}},
+      ]
+    },
+
+    s8:{
+      idx:8,
+      place:"D棟｜廁所鏡子",
+      story:
+`你不得不去廁所。\n洗手台鏡子裡，你看見最後一間隔間下面有一雙腳。\n你很確定：你進來時這裡是空的。\n隔間門慢慢開了一條縫。\n\n你知道：如果你「確認」那是誰，事情通常會變糟。`,
+      question:"你會怎麼做？",
+      hint:"不要當英雄，選你真的會做的。",
+      choices:[
+        {label:"裝沒看到：立刻走出廁所，不逗留。", next:"s9", score:{G:1}},
+        {label:"拿東西當武器：拖把/垃圾桶，壯膽吼一句。", next:"s9", score:{T:1}},
+        {label:"不看鏡子：低頭離開，避免再對上畫面。", next:"s9", score:{WT:1,R:1}},
+        {label:"我差點想問：『你是誰？』但我忍住，直接走。", next:"s9", score:{R:1,WT:1}},
+      ]
+    },
+
+    s9:{
+      idx:9,
+      place:"D棟｜走廊停電",
+      story:
+`你剛走出廁所，整層燈瞬間全滅。\n手機亮起低電量警告。\n黑暗裡，有一個廣播聲在很近的地方說：\n「提示：不要在黑暗裡說『我沒事』。」`,
+      question:"你怎麼應對停電？",
+      hint:"你是省電派？還是先確保方向派？",
+      choices:[
+        {label:"開手電筒＋看出口標示：先把路線弄清楚。", next:"s10", score:{R:1,G:1}},
+        {label:"原地等30秒：確認是不是跳電，別亂跑。", next:"s10", score:{WT:1,R:1}},
+        {label:"靠記憶摸到樓梯間：我先離開這層再說。", next:"s10", score:{IT:1,G:1}},
+        {label:"關掉手電筒省電：我寧可慢，但要留電。", next:"s10", score:{WT:1}},
+      ]
+    },
+
+    s10:{
+      idx:10,
+      place:"校門警衛室（值班室）方向",
+      story:
+`你終於走到戶外。\n遠處有一點點光，像校門警衛室（值班室）那邊。\n但你還在校園內。\n你突然想到：如果你想放棄，會不會門真的打不開？`,
+      question:"你會怎麼做？",
+      hint:"這題關鍵是：你相信規則嗎？",
+      choices:[
+        {label:"先去值班室方向：至少那邊比較亮。", next:"s11", score:{G:1,R:1}},
+        {label:"不去，照原路：我不想被引導。", next:"s11", score:{WT:1,R:1}},
+        {label:"打電話找同學：請他在校門外接我。", next:"s11", score:{IT:1,G:1}},
+        {label:"我直接試一次大門：能出去就出去。", next:"s11", score:{C:1,T:1}},
+      ]
+    },
+
+    s11:{
+      idx:11,
+      place:"校門｜門真的打不開",
+      story:
+`你試了校門。\n門真的打不開。\n你甚至看到鎖扣上有很新很新的一條刮痕，像剛被人用力拉過。\n手機又跳出同一句：\n「不要把任務說出口。」`,
+      question:"你現在怎麼選？",
+      hint:"崩潰、求援、休息、或硬闖。",
+      choices:[
+        {label:"咬牙回頭：好，我把任務走完。", next:"s12", score:{R:1,WT:1}},
+        {label:"我開始大聲求救：我不管規則了。", next:"s12", score:{T:1,IT:1}},
+        {label:"先找亮處坐一下：讓自己冷靜再走。", next:"s12", score:{E:1,R:1}},
+        {label:"想翻牆：我不想被規則綁架。", next:"s12", score:{C:1,G:1}},
+      ]
+    },
+
+    s12:{
+      idx:12,
+      place:"商管大樓｜電梯錯層",
+      story:
+`你走了很久，腳底有點麻。\n商管大樓的電梯還亮著。\n你進去按地下室，電梯門卻打開到一個「沒有樓層顯示」的黑走廊。\n\n你已經知道：很多怪事都是從「踏出那一步」開始。`,
+      question:"你會怎麼做？",
       hint:"很現實：你敢不敢踏出去？",
       choices:[
-        {label:"絕不出去：猛按關門＋按回一樓。", next:"q7", score:{WT:1,G:1}},
-        {label:"踏出一步看一下：我只出去一步，隨時縮回來。", next:"q7", score:{C:1,T:1}},
-        {label:"先拍顯示/錄面板：我想記住這個異常點。", next:"q7", score:{E:1,R:1}},
-        {label:"大聲問：『有人嗎？』我想確認是不是有人受困。", next:"q7", score:{G:1,IT:1}},
+        {label:"絕不出去：猛按關門＋按回一樓。", next:"s13", score:{WT:1,G:1}},
+        {label:"踏出一步看一下：我只出去一步，隨時縮回來。", next:"s13", score:{C:1,T:1}},
+        {label:"先錄面板（不開閃光）：我想記住這個異常。", next:"s13", score:{E:1,R:1}},
+        {label:"大聲問：『有人嗎？』但我不問身份、不點名。", next:"s13", score:{G:1,IT:1}},
       ]
     },
 
-    q7:{
-      place:"D棟電梯口",
+    s13:{
+      idx:13,
+      place:"你走到更遠的區域｜黑天鵝",
       story:
-`你到D棟。\n電梯自己「叮」一聲開了。\n裡面沒人。\n但你聽到很壓抑的哭聲，像是從電梯井深處傳來。\n\n此刻你腦袋裡只剩一句：不要多管閒事？還是要幫？`,
-      question:"你會怎麼做？",
-      hint:"選你最像的。",
+`你又走了一大段路。\n霧淡了些，你才意識到自己已經離宮燈大道很遠了。\n前方那個熟悉的黑天鵝雕像終於出現。\n\n雕像旁的地上有一張照片——像是你剛剛相簿裡黑掉的那張「掉」出來的。`,
+      question:"你會怎麼處理這張照片？",
+      hint:"只有你『真的拍過照』，這題才會特別刺。",
       choices:[
-        {label:"避開電梯：我走樓梯，離它遠一點。", next:"q8", score:{WT:1,G:1}},
-        {label:"靠近看一下：我想確認裡面到底有沒有什麼。", next:"q8", score:{R:1}},
-        {label:"鞠躬道歉：『打擾了』，然後離開。", next:"q8", score:{G:1}},
-        {label:"出聲安撫：『你需要幫忙嗎？我可以帶你出去。』", next:"q8", score:{IT:1,G:1}},
+        {label:"我不撿：我繞過去，不碰任何東西。", next:"s14", score:{WT:1,G:1}},
+        {label:"我撿起來看：但我不在這裡打開相簿。", next:"s14", score:{R:1,E:1}},
+        {label:"我當場刪掉：我不想被『照片』綁住。", next:"s14", score:{WT:1}, setFlags:{tookPhoto:true}},
+        {label:"我想拍一下（但我會避免閃光）。", next:"s14", score:{E:1,C:1},
+          // 若玩家已知 NO_FLASH 且開閃光才算違規；這裡選項不開閃光
+        },
       ]
     },
 
-    q8:{
-      place:"廁所鏡子",
+    s14:{
+      idx:14,
+      place:"販賣機燈光下｜陌生學妹求助",
       story:
-`你不得不去廁所。\n洗手台鏡子裡，你看見最後一間隔間下面有一雙腳。\n你很確定：你進來時這裡是空的。\n隔間門慢慢開了一條縫。\n\n你會？`,
-      question:"你怎麼做？",
-      hint:"這題不要當英雄，選你真的會做的。",
-      choices:[
-        {label:"裝沒看到：立刻走出廁所，不逗留。", next:"q9", score:{G:1}},
-        {label:"拿東西當武器：拖把/垃圾桶，壯膽吼一句。", next:"q9", score:{T:1}},
-        {label:"不看鏡子：低頭、離開，避免再對上畫面。", next:"q9", score:{WT:1,R:1}},
-        {label:"用半開玩笑壓住恐懼：小聲念幾句保佑，快走。", next:"q9", score:{C:1,IT:1}},
-      ]
-    },
-
-    q9:{
-      place:"整層停電",
-      story:
-`你剛離開廁所，整層燈瞬間全滅。\n你手機亮起低電量警告。\n黑暗裡你聽到一句很小的廣播音：\n「提示：不要在黑暗中說『我沒事』。」\n\n你會？`,
-      question:"你怎麼應對停電？",
-      hint:"你是省電派？還是求援派？",
-      choices:[
-        {label:"開手電筒＋找出口標示：先把路線弄清楚。", next:"q10", score:{R:1,G:1}},
-        {label:"原地等30秒：我想確認是不是跳電，別亂跑。", next:"q10", score:{WT:1,R:1}},
-        {label:"直接走：靠記憶摸到樓梯間再說。", next:"q10", score:{IT:1}},
-        {label:"關掉手電筒省電：我寧可慢一點，也要留電。", next:"q10", score:{WT:1}},
-      ]
-    },
-
-    q10:{
-      place:"電量 10%",
-      story:
-`你手機剩10%。\n你突然想到：如果前面你有「拍照/錄影」，現在更危險。\n因為低電量＝你連照明跟求助都可能沒了。\n\n你會做哪個最像你？`,
-      question:"你怎麼處理電量？",
-      hint:"這題很真實。",
-      choices:[
-        {label:"極限省電：關背景、調暗、只在必要時亮。", next:"q11", score:{WT:1,R:1}},
-        {label:"找插座：我寧可繞路也要先充一下。", next:"q11", score:{E:1,R:1}},
-        {label:"先報備：傳訊息/打給朋友說我在哪、在幹嘛（不提任務）。", next:"q11", score:{G:1,IT:1}},
-        {label:"關機硬走：我相信自己記得路，省電到最後。", next:"q11", score:{T:1,G:1}},
-      ]
-    },
-
-    q11:{
-      place:"鬼來電",
-      story:
-`你手機響了。\n來電顯示：『外語大樓』\n你想起早先的提示：不要確認身份；不要說我沒事；不要把任務說出口。\n\n你會怎麼接？`,
-      question:"你怎麼處理來電？",
-      hint:"這題選真實反應。",
-      choices:[
-        {label:"接起來：我說『喂？』但不透露我在做什麼。", next:"q12", score:{IT:1,T:1}},
-        {label:"不接：讓它響完，我專注走路。", next:"q12", score:{R:1}},
-        {label:"接通不出聲：我先聽對方講什麼。", next:"q12", score:{WT:1,R:1}},
-        {label:"直接掛斷＋開飛航：我不想被它帶節奏。", next:"q12", score:{E:1,G:1}},
-      ]
-    },
-
-    q12:{
-      place:"身後腳步聲",
-      story:
-`你走出D棟外面，路燈還亮。\n你聽到身後也有腳步聲。\n你走快，它也走快；你停，它也停。\n\n你背脊發麻：跟著你的到底是人還是別的？`,
-      question:"你會怎麼做？",
-      hint:"現實反應題。",
-      choices:[
-        {label:"不回頭：直接往人多處走。", next:"q13", score:{G:1,R:1}},
-        {label:"突然回頭吼：『誰？不要跟！』", next:"q13", score:{T:1}},
-        {label:"拿鑰匙防身：保持走路，但準備自保。", next:"q13", score:{WT:1}},
-        {label:"拐進亮的販賣機區：裝買飲料，順便用燈看身後。", next:"q13", score:{E:1,IT:1}},
-      ]
-    },
-
-    q13:{
-      place:"陌生學妹求助",
-      story:
-`黑天鵝附近，一個學妹樣子的女生站在路中央。\n她聲音發抖：\n「學長/學姊…可以陪我去找東西嗎？我不敢一個人…」\n\n她看起來很可憐，但也很不對勁。\n你會？`,
+`你在販賣機燈光下喘口氣。\n一個學妹樣子的女生站在路邊，聲音發抖：\n「學長／學姊…可以陪我去找東西嗎？我不敢一個人…」\n\n你已經知道：不要確認身份。\n而且她一直想讓你「問」。`,
       question:"你會怎麼回應？",
-      hint:"你是會幫？會驗證？會拒絕？",
+      hint:"幫、驗證、拒絕、或保持距離。",
       choices:[
-        {label:"答應陪她：一起走比較不孤單。", next:"q14", score:{G:2}},
-        {label:"先問細節：你哪一系？丟什麼？在哪丟？", next:"q14", score:{R:1,IT:1}},
-        {label:"婉拒＋建議找校安：我不敢陪走夜路。", next:"q14", score:{WT:1,G:1}},
-        {label:"保持距離繞開：我直覺這不是正常情況。", next:"q14", score:{WT:1,R:1}},
+        {label:"答應陪她：至少在燈下先一起走一段。", next:"s15", score:{G:2}},
+        {label:"我不問你是誰：我只問『你丟什麼、在哪、要走哪條路』。", next:"s15", score:{R:1,G:1}},
+        {label:"我很直接拒絕：建議去外語大樓/行政區白天再找人。", next:"s15", score:{WT:1,G:1}},
+        {label:"我脫口問：『你到底是誰？』", next:"s15", score:{T:1,IT:1},
+          setFlags:{askedIdentity:true},
+          violates:["NO_ID"]
+        },
       ]
     },
 
-    q14:{
-      place:"校門上鎖",
-      story:
-`你走到校門口想離開。\n門真的打不開。\n鐵鎖冰冷。\n你想起一開始那句：\n「如果你想放棄——你會發現門打不開。」\n\n規則開始成形了：它真的會『回收』你前面的選擇。`,
-      question:"你現在會怎麼做？",
-      hint:"很現實：崩潰？求援？堅持？翻牆？",
-      choices:[
-        {label:"咬牙回頭：好，我把任務走完。", next:"q15", score:{R:1,WT:1}},
-        {label:"大喊求救：我想把警衛或外面的人叫醒。", next:"q15", score:{T:1,IT:1}},
-        {label:"先休息冷靜：找亮處坐一下再決定。", next:"q15", score:{E:1,R:1}},
-        {label:"想翻牆：我不想被規則綁架。", next:"q15", score:{C:1,G:1}},
-      ]
-    },
-
-    q15:{
+    s15:{
+      idx:15,
       place:"鐘聲（不該有）",
       story:
-`凌晨的校園突然傳來很遠的鐘聲。\n你知道這裡平常不會有這種整點鐘。\n鐘聲像在引路。\n\n同時你手機又跳出一行字（像系統通知）：\n「提示：如果你一直在拍照，請停止。你不需要更多證據。」`,
-      question:"你會怎麼面對鐘聲？",
-      hint:"你會跟著走？還是守自己的路？",
-      choices:[
-        {label:"跟著鐘聲走：我相信它在引我去終點。", next:"q16", score:{G:1,C:1}},
-        {label:"不理：按原計畫走，避免被帶節奏。", next:"q16", score:{WT:1,R:1}},
-        {label:"當警告：我去找保全/亮處，先確保安全。", next:"q16", score:{G:1,R:1}},
-        {label:"停下祈禱一下：不是迷信，是讓自己穩住。", next:"q16", score:{IT:1,E:1}},
-      ]
-    },
-
-    q16:{
-      place:"蛋捲廣場的身影",
-      story:
-`你到一個開闊的廣場。\n遠處有一道站著不動的人影。\n像老式制服的背影。\n你靠近一點，那影子沒有回頭。\n\n你突然想起一條你一路收集到的「隱性規則」：\n『不要主動確認對方身份。』`,
+`凌晨，遠處傳來很慢很慢的鐘聲。\n你知道淡江平常不會有這種鐘。\n同時你手機跳出提示：\n「提示：如果你一直在拍照，請停止。你不需要更多證據。」`,
       question:"你會怎麼做？",
-      hint:"你會尊重、溝通、觀察、或蒐證？",
+      hint:"跟著走？守自己路？找亮處？還是祈禱？",
       choices:[
-        {label:"鞠躬致意：不問身份，只說『打擾了』。", next:"q17", score:{G:1,WT:1}},
-        {label:"嘗試對話：『你需要幫忙嗎？』但不問你是誰。", next:"q17", score:{IT:1,G:1}},
-        {label:"保持距離觀察：我想看它要幹嘛。", next:"q17", score:{R:1}},
-        {label:"偷拍一張：我想留下最後證據（但不開閃光）。", next:"q17", score:{E:1}},
+        {label:"跟著鐘聲走：我相信它在引我去終點。", next:"s16", score:{G:1,C:1}},
+        {label:"不理：按原計畫走，避免被帶節奏。", next:"s16", score:{WT:1,R:1}},
+        {label:"當警告：我去亮處/有人可能出現的地方先穩住。", next:"s16", score:{G:1,R:1}},
+        {label:"停下深呼吸：不是迷信，是讓自己穩住。", next:"s16", score:{IT:1,E:1}},
       ]
     },
 
-    q17:{
-      place:"好友出現",
+    s16:{
+      idx:16,
+      place:"驚聲廣場｜那個背影",
       story:
-`你身後突然有人叫你名字。\n你回頭看到「朋友」跑來：\n「你在這裡喔！我找你很久。你沒事吧？」\n\n你瞬間安心又警覺。\n因為規則也說過：不要說任務。\n而且你也不確定——他真的是他嗎？`,
-      question:"你會怎麼回？（最後一題）",
-      hint:"你會守密？驗證？還是直接傾吐？",
+`你到了一個開闊的廣場。\n遠處有一道背影站著不動，像老式制服。\n你靠近一點，背影沒有回頭。\n\n你已經知道：不要確認身份。\n而你也記得宮燈那條：不要回頭、不要報時間。`,
+      question:"你會怎麼做？",
+      hint:"尊重、溝通、觀察、或蒐證（小心閃光）。",
+      choices:[
+        {label:"鞠躬致意：不問身份，只說『打擾了』。", next:"s17", score:{G:1,WT:1}},
+        {label:"嘗試溝通：『你需要幫忙嗎？』不問你是誰。", next:"s17", score:{IT:1,G:1}},
+        {label:"保持距離觀察：我想看它要幹嘛。", next:"s17", score:{R:1}},
+        {label:"我想偷拍，但我會先確認「沒開閃光」。", next:"s17", score:{E:1},
+          learnRules:["NO_FLASH"] // 若前面沒拍照，這裡才第一次知道也合理
+        },
+      ]
+    },
+
+    s17:{
+      idx:17,
+      place:"破曉｜好友出現",
+      story:
+`天開始亮。\n你身後突然有人叫你名字。\n你回頭看到「朋友」跑來：\n「你在這裡喔！我找你很久。你沒事吧？」\n\n你突然想到：\n——不要急著說『我沒事』。\n——不要把任務說出口。\n\n最後一題了。`,
+      question:"你會怎麼回？",
+      hint:"你會守密、驗證、還是直接傾吐？",
       choices:[
         {label:"反問細節試探：你怎麼知道我在這？你剛剛在哪？", next:"end", score:{R:2}},
-        {label:"守口如瓶：『我沒事，走吧』不解釋任何事。", next:"end", score:{WT:2}},
-        {label:"直接把整晚講出來：我真的憋不住，我需要有人聽。", next:"end", score:{IT:2,T:1}},
-        {label:"用只有你們懂的暗號驗證：先確定他是本人再說。", next:"end", score:{E:1,R:1}},
+        {label:"守口如瓶：『走吧』不解釋任何事。", next:"end", score:{WT:2}},
+        {label:"我忍不住先說：『我沒事…』然後才講。", next:"end", score:{IT:2},
+          setFlags:{saidImFine:true},
+          violates:["NO_FINE"]
+        },
+        {label:"用你們懂的暗號驗證：先確定他是本人再說。", next:"end", score:{E:1,R:1}},
       ]
     },
 
     end:{
-      place:"破曉",
+      idx:18,
+      place:"結束",
       story:
-`天開始亮了。\n霧慢慢散開。\n你突然理解：這一晚不是要你找「唯一正解」；而是看你在壓力下，最自然會怎麼做。\n\n最後一條通知跳出來：\n「你不需要完美，你只需要走你最像的那條路。」`,
-      question:"", hint:"", choices:[]
+`霧散了。\n你突然理解：這一晚不是在找「唯一正解」。\n而是在看你在壓力下，最自然會怎麼做。\n\n最後一條通知跳出：\n「你不需要完美，你只需要走你最像的那條路。」`,
+      question:"",
+      hint:"",
+      choices:[]
     }
   };
 
-  let state = {
-    started:false,
-    nodeId:"q0",
-    step:0,
-    history:[],
-    scores:initScores(),
-    lastTiebreak:null
-  };
+  // ---------- 規則回收：當下就出事 ----------
+  function ensureKnown(ruleKey){
+    if(!ruleKey) return;
+    state.knownRules.add(ruleKey);
+  }
 
+  function learnRules(arr){
+    (arr||[]).forEach(k=>ensureKnown(k));
+  }
+
+  function triggerConsequence(ruleKey){
+    // 立即出事：文字＋haunt＋（可選）扣分/偏移
+    const name = RULES[ruleKey]?.name || ruleKey;
+    state.haunt += 1;
+
+    let msg = `你剛剛「明明知道」規則卻還是做了。\n規則回收了你這個動作。\n\n【回收規則】${name}\n`;
+
+    // 不同規則不同事件
+    if(ruleKey==="NO_TIME"){
+      msg += `第三盞宮燈的光像被扯長。\n你手機時間跳了一下：從 00:12 變成 00:12，卻「少了一秒」。\n你開始不確定：你剛剛失去的到底是時間，還是記憶？`;
+    }else if(ruleKey==="NO_TURN"){
+      msg += `你回頭的瞬間，看見的不是臉。\n只有一盞燈罩裡「反射」出你的眼睛。\n然後那雙眼睛慢半拍眨了一下——像不是你在眨。`;
+    }else if(ruleKey==="NO_ID"){
+      msg += `你一問「你是誰」，對方就像被按到開關。\n溫柔聲線消失，只剩廣播：\n「身份確認完成。」\n你突然覺得自己像被『登記』了。`;
+    }else if(ruleKey==="NO_FLASH"){
+      msg += `閃光一亮，你看到畫面裡多了一個站得很近的人。\n但你現實視野裡完全沒有。\n下一秒，照片自動被存成：『已送出』。`;
+    }else if(ruleKey==="NO_FINE"){
+      msg += `你說「我沒事」的瞬間，周圍變得更安靜。\n安靜到你聽見自己吞口水的聲音。\n然後有個聲音在你耳邊跟著說：\n「你沒事。」（不是你自己的聲音）`;
+    }else{
+      msg += `你感覺有某種東西「靠近了」。`;
+    }
+
+    state.lastConsequence = msg;
+
+    // 違規也會影響傾向（讓結果更真實）：違規後通常更偏向救場/應變/情緒
+    // 你也可以刪掉這段（不影響劇情）
+    if(ruleKey==="NO_TIME" || ruleKey==="NO_TURN") state.scores.IT += 1;
+    if(ruleKey==="NO_ID") state.scores.WT += 1;
+    if(ruleKey==="NO_FINE") state.scores.T += 1;
+  }
+
+  function handleViolations(violates){
+    if(!violates || violates.length===0) return;
+    for(const r of violates){
+      if(state.knownRules.has(r)){
+        triggerConsequence(r);
+        return;
+      }
+    }
+  }
+
+  // ---------- 結果計算 ----------
   function computeWinner(){
     const max = Math.max(...TYPES.map(k=>state.scores[k]));
     const winners = TYPES.filter(k=>state.scores[k]===max);
     if(winners.length===1) return winners[0];
-    // 平手處理：優先看更「定向」的類型（你也可自行調整）
+    // 平手優先序：越「定向」越優先
     const priority = ["R","WT","IT","E","G","C","T"];
     for(const p of priority) if(winners.includes(p)) return p;
     return winners[0];
   }
 
+  // ---------- UI ----------
   function setText(id, t){ document.getElementById(id).textContent = t; }
-
   function setProgress(){
-    const pct = state.started ? (Math.min(state.step, STEPS)/STEPS)*100 : 0;
+    const pct = (Math.min(state.step, STEPS)/STEPS)*100;
     document.getElementById("barFill").style.width = `${pct}%`;
-    setText("counter", `${state.started ? Math.min(state.step, STEPS):0} / ${STEPS}`);
+    setText("counter", `${Math.min(state.step, STEPS)} / ${STEPS}`);
   }
-
   function nodeIsEnd(){ return state.nodeId==="end"; }
+
+  function renderConsequence(){
+    const box = document.getElementById("consequenceBox");
+    if(!state.lastConsequence){
+      box.style.display="none";
+      box.innerHTML="";
+      return;
+    }
+    box.style.display="block";
+    box.innerHTML = `
+      <div class="alert">
+        <div class="bang">!</div>
+        <div class="msg">${escapeHtml(state.lastConsequence)}</div>
+      </div>
+    `;
+  }
 
   function render(){
     const node = NODES[state.nodeId];
-
-    setText("kicker", state.started ? "午夜任務" : "序章");
     setText("place", node.place);
-    setText("storyText", node.story);
+    setText("kicker", nodeIsEnd() ? "任務結算" : "午夜任務");
+    setProgress();
+
+    // 內容
+    const story = (typeof node.story==="function") ? node.story() : node.story;
+    setText("storyText", story);
     setText("questionText", node.question || "");
     setText("hintText", node.hint || "");
+    renderConsequence();
 
-    document.getElementById("startBtn").disabled = state.started;
-    document.getElementById("restartBtn").disabled = !state.started;
-    document.getElementById("backBtn").disabled = state.history.length===0;
+    // 按鈕
+    document.getElementById("backBtn").disabled = (state.history.length===0);
 
     const micro = document.getElementById("microText");
     micro.textContent = nodeIsEnd()
       ? "你可以重來走不同反應路線（結果會變）。"
-      : "提示：選你最像的反應，不用想「正確答案」。";
+      : "提示：選你最像的反應；你已知的規則如果違反，會立刻出事。";
 
+    // 選項
     const choicesEl = document.getElementById("choices");
-    choicesEl.innerHTML = "";
+    choicesEl.innerHTML="";
 
     if(nodeIsEnd()){
       const winner = computeWinner();
@@ -732,7 +920,7 @@
         <h3 class="rtitle">${escapeHtml(r.title)}</h3>
         <p class="rbody">${escapeHtml(r.body)}</p>
         <div class="divider"></div>
-        <p class="p small">（分數概覽）</p>
+        <p class="p muted">（分數概覽：給你/朋友看得懂的版本）</p>
         <div class="scores" id="scoreGrid"></div>
         <div style="display:flex; gap:10px; margin-top:6px;">
           <button class="mbtn primary" id="shareBtn" style="flex:1;">複製結果連結</button>
@@ -759,8 +947,8 @@
       return;
     }
 
-    node.choices.forEach((c, i)=>{
-      const btn=document.createElement("button");
+    node.choices.forEach((c,i)=>{
+      const btn = document.createElement("button");
       btn.className="btn";
       btn.type="button";
       const key=["A","B","C","D"][i] || String(i+1);
@@ -768,76 +956,86 @@
       btn.onclick = ()=>pick(c);
       choicesEl.appendChild(btn);
     });
+
+    // 每次換題，故事框回到頂端（避免卡在中間）
+    requestAnimationFrame(()=>{ document.getElementById("storyBox").scrollTop = 0; });
   }
 
+  // ---------- 互動 ----------
   function pick(choice){
-    if(!state.started){
-    state.started = true;
-    document.getElementById("startBtn").disabled = true;
-    document.getElementById("restartBtn").disabled = false;
-  }
+    // 存歷史（支援返回）
     state.history.push({
       nodeId: state.nodeId,
       step: state.step,
-      scores: cloneScores(state.scores)
+      scores: cloneScores(state.scores),
+      flags: JSON.parse(JSON.stringify(state.flags)),
+      knownRules: Array.from(state.knownRules),
+      haunt: state.haunt,
+      lastConsequence: state.lastConsequence
     });
 
+    // 這一題的違規提示只顯示一次：進下一題前清掉，若本次違規又會立即重設
+    state.lastConsequence = null;
+
+    // 設 flags
+    if(choice.setFlags) Object.assign(state.flags, choice.setFlags);
+
+    // 學到規則（先學到，再判定這次有沒有違規更合理：因為你此刻就「知道」了）
+    learnRules(choice.learnRules);
+
+    // 判定違規（只有你「已知」的規則才算）
+    handleViolations(choice.violates);
+
+    // 加分
     applyScore(choice.score);
 
+    // 下一題
     state.nodeId = choice.next;
     state.step = Math.min(state.step + 1, STEPS);
+
+    // URL 清除 result
+    const url = new URL(location.href);
+    url.searchParams.delete("result");
+    history.replaceState(null, "", url.toString());
+
+    render();
+  }
+
+  function back(){
+    const prev = state.history.pop();
+    if(!prev) return;
+
+    state.nodeId = prev.nodeId;
+    state.step = prev.step;
+    state.scores = prev.scores;
+    state.flags = prev.flags;
+    state.knownRules = new Set(prev.knownRules);
+    state.haunt = prev.haunt;
+    state.lastConsequence = prev.lastConsequence;
 
     const url = new URL(location.href);
     url.searchParams.delete("result");
     history.replaceState(null, "", url.toString());
 
-    setProgress();
-    render();
-  }
-
-  function start(){
-    state.started=true;
-    state.nodeId="q0";
-    state.step=0;
-    state.history=[];
-    state.scores=initScores();
-
-    const url=new URL(location.href);
-    url.searchParams.delete("result");
-    history.replaceState(null,"",url.toString());
-
-    setProgress();
-    render();
-  }
-
-  function back(){
-    const prev=state.history.pop();
-    if(!prev) return;
-
-    state.nodeId=prev.nodeId;
-    state.step=prev.step;
-    state.scores=prev.scores;
-
-    const url=new URL(location.href);
-    url.searchParams.delete("result");
-    history.replaceState(null,"",url.toString());
-
-    setProgress();
     render();
   }
 
   function restart(){
-    state.started=false;
-    state.nodeId="q0";
-    state.step=0;
-    state.history=[];
-    state.scores=initScores();
+    state = {
+      step: 0,
+      nodeId: "s0",
+      history: [],
+      scores: initScores(),
+      flags:{tookPhoto:false,usedFlash:false,saidTime:false,askedIdentity:false,saidImFine:false,turnedBackAtLantern:false},
+      knownRules: new Set(),
+      haunt: 0,
+      lastConsequence: null
+    };
 
-    const url=new URL(location.href);
+    const url = new URL(location.href);
     url.searchParams.delete("result");
-    history.replaceState(null,"",url.toString());
+    history.replaceState(null, "", url.toString());
 
-    setProgress();
     render();
   }
 
@@ -856,26 +1054,21 @@
       .catch(()=>prompt("請手動複製：", text));
   }
 
-  document.getElementById("startBtn").onclick = start;
   document.getElementById("backBtn").onclick = back;
   document.getElementById("restartBtn").onclick = restart;
 
+  // 分享連結直接顯示結果頁
   (function boot(){
     const url = new URL(location.href);
     const r = url.searchParams.get("result");
     if(r && RESULTS[r]){
-      // 直接顯示結果頁（分享連結用）
-      state.started=true;
       state.nodeId="end";
       state.step=STEPS;
-      state.history=[];
-      state.scores=initScores();
+      state.scores = initScores();
       state.scores[r]=999;
-      setProgress();
       render();
       return;
     }
-    setProgress();
     render();
   })();
 </script>
