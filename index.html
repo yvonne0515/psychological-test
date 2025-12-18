@@ -2,905 +2,916 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>迷霧圖書館：你的冒險職分是？</title>
-  <meta name="description" content="RPG 劇情式心理測驗：通關迷霧圖書館，最後揭曉最適合的畢業專題類型。" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>TKU 規則怪談：迷霧圖書館（分支RPG心理測驗）</title>
+  <meta name="description" content="分支RPG心理測驗｜規則怪談＋都市傳說（TKU/淡水）｜手機單手友善｜最後揭曉最適合的畢業專題類型" />
   <style>
     :root{
-      --bg:#0b1020;
-      --panel:#111a33;
-      --card:#0f1730;
-      --text:#e7ecff;
-      --muted:#a8b3de;
-      --accent:#8dd7ff;
-      --accent2:#b4ffb7;
-      --danger:#ff7b7b;
-      --border:rgba(255,255,255,.12);
-      --shadow: 0 16px 50px rgba(0,0,0,.45);
-      --radius:18px;
+      --bg:#070a14;
+      --card:#0e1530;
+      --text:#eef1ff;
+      --muted:#b2b9e6;
+      --line:rgba(255,255,255,.12);
+      --accent:#90d2ff;
+      --accent2:#b7ffcc;
+      --danger:#ff8c8c;
+      --shadow:0 18px 60px rgba(0,0,0,.55);
+      --r:18px;
     }
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
-      background: radial-gradient(1200px 700px at 20% 0%, rgba(141,215,255,.20), transparent 50%),
-                  radial-gradient(900px 600px at 80% 10%, rgba(180,255,183,.14), transparent 55%),
-                  radial-gradient(1200px 900px at 50% 100%, rgba(126,116,255,.10), transparent 55%),
-                  var(--bg);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Noto Sans TC","PingFang TC","Microsoft JhengHei", sans-serif;
+      background:
+        radial-gradient(1200px 700px at 20% 0%, rgba(144,210,255,.18), transparent 55%),
+        radial-gradient(900px 650px at 85% 10%, rgba(183,255,204,.12), transparent 55%),
+        radial-gradient(900px 900px at 50% 100%, rgba(160,140,255,.08), transparent 60%),
+        var(--bg);
       color:var(--text);
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
+      overflow:hidden; 
     }
     .app{
-      width:min(980px, 100%);
-      display:grid;
-      gap:16px;
+      height:100dvh;
+      padding: env(safe-area-inset-top) 14px env(safe-area-inset-bottom);
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      max-width: 820px;
+      margin:0 auto;
     }
     header{
       display:flex;
-      align-items:flex-start;
       justify-content:space-between;
-      gap:12px;
+      align-items:flex-start;
+      gap:10px;
+      padding: 10px 4px 0;
     }
-    .brand{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-    }
-    .title{
-      font-size: clamp(22px, 2.6vw, 34px);
-      font-weight:800;
+    .h1{
+      font-size: clamp(18px, 4.2vw, 26px);
+      font-weight: 1000;
       letter-spacing:.5px;
       line-height:1.1;
     }
-    .subtitle{
+    .h2{
       color:var(--muted);
-      font-size:14px;
-      line-height:1.5;
-      max-width:70ch;
-    }
-    .chiprow{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    .chip{
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.05);
-      padding:8px 10px;
-      border-radius:999px;
       font-size:12px;
-      color:var(--muted);
+      line-height:1.4;
+      margin-top:6px;
+      max-width: 48ch;
     }
-    .panel{
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      border:1px solid var(--border);
-      border-radius: var(--radius);
+    .chips{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end}
+    .chip{
+      font-size:11px;
+      color:var(--muted);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      padding:7px 10px;
+      border-radius:999px;
+      user-select:none;
+    }
+
+    .card{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius: var(--r);
       box-shadow: var(--shadow);
       overflow:hidden;
+      position:relative;
     }
-    .panel-inner{ padding:18px; }
-    .grid{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap:16px;
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:12px 12px 10px;
+      border-bottom:1px solid var(--line);
+      background: rgba(0,0,0,.12);
     }
-    @media (max-width: 860px){
-      .grid{ grid-template-columns: 1fr; }
-      .chiprow{ justify-content:flex-start; }
+    .where{
+      display:flex;
+      flex-direction:column;
+      gap:3px;
+      min-width: 0;
     }
-    .card{
-      background: rgba(0,0,0,.18);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding:16px;
-    }
-    .story{
-      color:var(--text);
-      line-height:1.7;
-      font-size:15px;
-      white-space:pre-wrap;
-    }
-    .kicker{
-      color: var(--accent);
-      font-weight:700;
-      font-size:12px;
+    .where .k{
+      font-size:11px;
+      color:var(--accent);
+      font-weight:900;
       letter-spacing:.12em;
       text-transform:uppercase;
-      margin-bottom:10px;
     }
-    .question{
-      font-size:18px;
-      font-weight:800;
-      line-height:1.35;
-      margin:8px 0 12px;
+    .where .t{
+      font-size:14px;
+      font-weight:1000;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
     }
-    .options{
+    .prog{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-end;
+      gap:6px;
+      min-width: 120px;
+    }
+    .prog .count{
+      color:var(--muted);
+      font-size:11px;
+      white-space:nowrap;
+    }
+    .bar{
+      width: 140px;
+      max-width: 34vw;
+      height: 9px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      overflow:hidden;
+    }
+    .bar>div{
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      background: linear-gradient(90deg, rgba(144,210,255,.95), rgba(183,255,204,.95));
+      transition: width .25s ease;
+    }
+
+    .content{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      padding: 12px;
+      gap:10px;
+      background:
+        radial-gradient(500px 260px at 30% 0%, rgba(144,210,255,.08), transparent 55%),
+        radial-gradient(600px 300px at 70% 0%, rgba(183,255,204,.06), transparent 60%),
+        rgba(0,0,0,.06);
+    }
+    .story{
+      flex:1;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.20);
+      border-radius: 16px;
+      padding: 12px;
+      overflow:hidden; 
       display:flex;
       flex-direction:column;
       gap:10px;
-      margin-top:10px;
     }
-    button.option{
+    .p{
+      font-size: 15px;
+      line-height: 1.55;
+      margin:0;
+      color: var(--text);
+      white-space:pre-wrap;
+    }
+    .p.muted{ color: var(--muted); font-size: 13px; line-height: 1.45;}
+    .p.small{ font-size: 13px; color: var(--muted); }
+    .divider{ height:1px; background: var(--line); margin: 2px 0; }
+    .question{
+      font-size: 16px;
+      font-weight: 1000;
+      line-height: 1.35;
+      margin:0;
+    }
+
+    .choices{ display:grid; gap:10px; }
+    .btn{
       width:100%;
-      text-align:left;
-      border-radius: 14px;
-      padding:12px 12px;
-      border:1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 12px;
+      border:1px solid var(--line);
       background: rgba(255,255,255,.06);
-      color:var(--text);
+      color: var(--text);
+      text-align:left;
       cursor:pointer;
-      transition: transform .06s ease, background .2s ease, border-color .2s ease;
       display:flex;
       gap:10px;
       align-items:flex-start;
+      transition: transform .06s ease, background .2s ease, border-color .2s ease;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
     }
-    button.option:hover{
-      background: rgba(141,215,255,.10);
-      border-color: rgba(141,215,255,.40);
-      transform: translateY(-1px);
-    }
-    .opt-tag{
-      flex:0 0 auto;
-      width:28px; height:28px;
-      border-radius:10px;
-      display:grid;
-      place-items:center;
-      font-weight:800;
-      background: rgba(141,215,255,.14);
-      border:1px solid rgba(141,215,255,.25);
+    .btn:active{ transform: translateY(1px) scale(.995); }
+    .btn:hover{ background: rgba(144,210,255,.10); border-color: rgba(144,210,255,.40); }
+    .tag{
+      width: 30px; height: 30px;
+      border-radius: 12px;
+      display:grid; place-items:center;
+      font-weight: 1000;
+      flex: 0 0 auto;
+      background: rgba(144,210,255,.14);
+      border: 1px solid rgba(144,210,255,.25);
       color: var(--accent);
     }
-    .opt-text{ line-height:1.45; }
-    .sidebar{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-    .progress{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      color:var(--muted);
-      font-size:13px;
-      margin-bottom:8px;
-    }
-    .bar{
-      height:10px;
-      background: rgba(255,255,255,.08);
-      border:1px solid var(--border);
-      border-radius:999px;
-      overflow:hidden;
-    }
-    .bar > div{
-      height:100%;
-      width:0%;
-      background: linear-gradient(90deg, rgba(141,215,255,.95), rgba(180,255,183,.95));
-      border-radius:999px;
-      transition: width .25s ease;
-    }
-    .controls{
+    .txt{ line-height:1.4; font-size: 14px; }
+
+    .foot{
+      padding: 10px 12px 12px;
+      border-top:1px solid var(--line);
+      background: rgba(0,0,0,.12);
       display:flex;
       gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
+      justify-content:space-between;
+      align-items:center;
     }
-    .btn{
+    .mini{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    .mbtn{
       border-radius: 12px;
-      padding:10px 12px;
-      border:1px solid var(--border);
+      padding: 9px 10px;
+      border:1px solid var(--line);
       background: rgba(255,255,255,.06);
-      color:var(--text);
-      cursor:pointer;
-      transition: background .2s ease, border-color .2s ease;
-      font-weight:700;
-      font-size:13px;
-    }
-    .btn:hover{
-      background: rgba(255,255,255,.10);
-      border-color: rgba(255,255,255,.22);
-    }
-    .btn.primary{
-      background: rgba(141,215,255,.14);
-      border-color: rgba(141,215,255,.40);
       color: var(--text);
-    }
-    .btn.danger{
-      background: rgba(255,123,123,.12);
-      border-color: rgba(255,123,123,.35);
-    }
-    .small{
-      font-size:12px; color:var(--muted); line-height:1.6;
-    }
-    .result-title{
-      font-size:22px;
+      cursor:pointer;
       font-weight:900;
-      margin:6px 0 10px;
+      font-size: 12px;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
     }
-    .result-badge{
+    .mbtn.primary{ background: rgba(144,210,255,.14); border-color: rgba(144,210,255,.40); }
+    .mbtn.danger{ background: rgba(255,140,140,.12); border-color: rgba(255,140,140,.35); }
+    .mtext{
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.3;
+      text-align:right;
+      max-width: 46vw;
+    }
+
+    .result{
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.20);
+      border-radius: 16px;
+      padding: 12px;
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .badge{
       display:inline-flex;
       align-items:center;
       gap:8px;
-      padding:8px 10px;
+      padding:7px 10px;
       border-radius:999px;
-      border:1px solid var(--border);
+      border:1px solid var(--line);
       background: rgba(255,255,255,.06);
       color: var(--muted);
-      font-size:12px;
-      margin-bottom:10px;
+      font-size: 11px;
+      width: fit-content;
     }
-    .badge-dot{
+    .dot{
       width:10px; height:10px; border-radius:50%;
-      background: rgba(141,215,255,.9);
-      box-shadow: 0 0 0 4px rgba(141,215,255,.14);
+      background: rgba(144,210,255,.95);
+      box-shadow: 0 0 0 4px rgba(144,210,255,.14);
     }
-    .result-body{
-      white-space:pre-wrap;
-      line-height:1.75;
-      color:var(--text);
-      font-size:15px;
-    }
-    .scorebox{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-      margin-top:12px;
-    }
-    .scoreitem{
-      border:1px solid var(--border);
-      background: rgba(0,0,0,.15);
+    .rtitle{ font-size: 18px; font-weight: 1100; margin:0; }
+    .rbody{ font-size: 14px; line-height: 1.6; color: var(--text); margin:0; white-space:pre-wrap; }
+    .scores{ display:grid; grid-template-columns: 1fr 1fr; gap:8px; }
+    .sitem{
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.18);
       border-radius: 14px;
-      padding:10px;
-      color:var(--muted);
-      font-size:12px;
+      padding: 9px 10px;
+      font-size: 12px;
+      color: var(--muted);
       display:flex;
-      align-items:center;
       justify-content:space-between;
-      gap:10px;
+      gap:8px;
+      align-items:center;
     }
-    .scoreitem strong{ color:var(--text); font-size:13px; }
-    .footer{
-      text-align:center;
-      color:rgba(168,179,222,.8);
-      font-size:12px;
-      margin-top:6px;
+    .sitem strong{ color: var(--text); font-size: 12px; }
+
+    .ghost{
+      position:absolute;
+      inset:auto 12px 150px auto;
+      width:10px; height:10px;
+      border-radius:50%;
+      background: rgba(183,255,204,.65);
+      box-shadow: 0 0 24px rgba(183,255,204,.35);
+      animation: float 3.6s ease-in-out infinite;
+      opacity:.55;
+      pointer-events:none;
     }
-    a{ color: var(--accent); text-decoration: none; }
-    a:hover{ text-decoration: underline; }
+    @keyframes float{
+      0%,100%{ transform: translate(0,0); }
+      50%{ transform: translate(-6px, -10px); }
+    }
   </style>
 </head>
 
 <body>
   <div class="app">
     <header>
-      <div class="brand">
-        <div class="title">迷霧圖書館：你的冒險職分是？</div>
-        <div class="subtitle">
-          RPG 劇情式心理測驗。一路作答到最後，才會揭曉你最適合的畢業專題類型。
-          （過程不會出現「專題」等字，放心玩。）
-        </div>
+      <div>
+        <div class="h1">TKU 規則怪談：迷霧圖書館</div>
+        <div class="h2">分支RPG心理測驗｜規則怪談＋都市傳說（淡水/校園）｜手機單手友善｜最後揭曉最適合的畢業專題類型</div>
       </div>
-      <div class="chiprow">
-        <div class="chip">14 題</div>
-        <div class="chip">三選一</div>
-        <div class="chip">離線可用</div>
+      <div class="chips">
+        <div class="chip">點選作答</div>
+        <div class="chip">不用滑</div>
+        <div class="chip">分支劇情</div>
       </div>
     </header>
 
-    <div class="panel">
-      <div class="panel-inner grid">
-        <!-- main -->
-        <div class="card">
-          <div id="kicker" class="kicker">序章</div>
-          <div id="story" class="story"></div>
-
-          <div id="questionBlock" style="margin-top:14px; display:none;">
-            <div id="question" class="question"></div>
-            <div class="options" id="options"></div>
-          </div>
-
-          <div id="resultBlock" style="display:none;">
-            <div class="result-badge"><span class="badge-dot"></span><span id="resultBadgeText"></span></div>
-            <div class="result-title" id="resultTitle"></div>
-            <div class="result-body" id="resultBody"></div>
-            <div class="scorebox" id="scoreBox"></div>
-          </div>
+    <section class="card" aria-live="polite">
+      <div class="topbar">
+        <div class="where">
+          <div class="k" id="kicker">序章</div>
+          <div class="t" id="place">淡水的霧</div>
         </div>
-
-        <!-- sidebar -->
-        <div class="sidebar">
-          <div class="card">
-            <div class="progress">
-              <div><strong id="stepLabel" style="color:var(--text)">未開始</strong></div>
-              <div id="stepCounter">0 / 14</div>
-            </div>
-            <div class="bar"><div id="barFill"></div></div>
-
-            <div class="controls" style="margin-top:12px">
-              <button class="btn primary" id="startBtn">開始冒險</button>
-              <button class="btn" id="backBtn" disabled>上一步</button>
-              <button class="btn" id="restartBtn" disabled>重來</button>
-              <button class="btn" id="shareBtn" disabled>複製結果連結</button>
-              <button class="btn danger" id="resetUrlBtn" disabled>清除網址結果</button>
-            </div>
-
-            <div class="small" style="margin-top:10px">
-              小提示：如果你想把測驗丟到 OOOPEN Lab 或其他平台，也可以直接複製題目與結果文案使用。
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="kicker">規則</div>
-            <div class="small">
-              1) 每題選一個最像你的選項。<br/>
-              2) 別選「最正確」，選「最像你」。<br/>
-              3) 若分數平手，會用第 13 題作為決勝題。<br/>
-            </div>
-          </div>
-
-          <div class="footer">
-            made for Tamkang Japanese Dept • single-file site
-          </div>
+        <div class="prog">
+          <div class="count" id="counter">0 / 11</div>
+          <div class="bar"><div id="barFill"></div></div>
         </div>
       </div>
-    </div>
+
+      <div class="content">
+        <div class="ghost" aria-hidden="true"></div>
+
+        <div class="story">
+          <p class="p" id="storyText"></p>
+          <div class="divider"></div>
+          <p class="question" id="questionText"></p>
+          <p class="p muted" id="hintText"></p>
+        </div>
+
+        <div class="choices" id="choices"></div>
+      </div>
+
+      <div class="foot">
+        <div class="mini">
+          <button class="mbtn primary" id="startBtn">開始</button>
+          <button class="mbtn" id="backBtn" disabled>返回</button>
+          <button class="mbtn danger" id="restartBtn" disabled>重來</button>
+        </div>
+        <div class="mtext" id="microText">提示：選你最像的反應，不用想很久。</div>
+      </div>
+    </section>
   </div>
 
 <script>
-/**
- * 職分代碼：
- * S 賢者 -> 學術論文
- * P 舞台者 -> 戲劇公演
- * C 造物師 -> 創作
- * W 抄寫官 -> 筆譯
- * N 交涉使 -> 口譯
- * E 編年史家 -> 雜誌編輯
- * G 領航員 -> 觀光導覽
- */
+  // 類型（最後映射到畢專類型）：過程不提「專題」等字
+  const TYPES = ["S","P","C","W","N","E","G"]; // Scholar, Performer, Creator, Written, Negotiator, Editor, Guide
+  const STEPS = 11;
 
-const INTRO = [
-`你在淡水河口旁醒來，掌心握著一枚刻有「TK」字樣的徽章。
-遠處有一座被霧包住的巨大建築——迷霧圖書館。
+  function initScores(){ const s={}; TYPES.forEach(k=>s[k]=0); return s; }
+  function cloneScores(s){ const o={}; TYPES.forEach(k=>o[k]=s[k]); return o; }
+  function applyScore(scoreObj){ if(!scoreObj) return; for(const k of Object.keys(scoreObj)) state.scores[k]+=scoreObj[k]; }
+  function escapeHtml(str){ return (str??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m])); }
+  function typeName(k){ return ({S:"賢者",P:"舞台者",C:"造物師",W:"抄寫官",N:"交涉使",E:"編年史家",G:"領航員"})[k]||k; }
 
-傳說，只要通過館內的試煉，你就會得到一份「能帶你走到最後的道路」。
+  const RESULTS = {
+    S:{ badge:"你會先問：規則到底是什麼？", title:"賢者（The Scholar）",
+      body:`你擅長把怪規則拆成可驗證的線索，越模糊越想釐清。\n\n【最適合的畢業專題類型】學術論文\n關鍵：題目聚焦、文獻耐讀、架構清楚、定期回報進度。` },
+    P:{ badge:"你把恐怖變成『可控的舞台』", title:"舞台者（The Performer）",
+      body:`你擅長抓節奏、帶氣氛、把尷尬與恐懼轉成動能。\n\n【最適合的畢業專題類型】戲劇公演\n關鍵：耐排練、敢溝通、能扛責任、細節磨到位。` },
+    C:{ badge:"你會想：這很適合做成作品", title:"造物師（The Creator）",
+      body:`你擅長把異常變靈感，把規則怪談收束成自己的世界觀。\n\n【最適合的畢業專題類型】創作（文章／影片／企劃／作品等）\n關鍵：先出雛形、快速迭代、把過程整理成可展示成果。` },
+    W:{ badge:"你對字句敏感，最怕『含糊』", title:"抄寫官（The Translator of Text）",
+      body:`你擅長處理字與意思的精準落點，會一直追問：原意到底是什麼？\n\n【最適合的畢業專題類型】翻譯（筆譯）\n關鍵：用詞一致、譯注清楚、版本管理、反覆潤稿。` },
+    N:{ badge:"你靠現場反應把局救回來", title:"交涉使（The Interpreter）",
+      body:`你擅長抓重點、降溫、讓人理解，越緊張越能冷靜講清楚。\n\n【最適合的畢業專題類型】翻譯（口譯）\n關鍵：大量情境演練、錄音回聽、筆記系統、壓力管理。` },
+    E:{ badge:"你腦中自帶『排版與順序』", title:"編年史家（The Editor）",
+      body:`你擅長把碎片整理成讀者看得下去的成品，順序對你很重要。\n\n【最適合的畢業專題類型】雜誌編輯\n關鍵：主題策劃、稿件流程、校對排版、死線管理。` },
+    G:{ badge:"你天生會帶路，先讓大家安心", title:"領航員（The Guide）",
+      body:`你擅長在混亂中維持隊伍節奏：先走、邊問、邊修正。\n\n【最適合的畢業專題類型】觀光導覽\n關鍵：導覽腳本、互動設計、臨場應變、節奏控場。` }
+  };
 
-你推開門，七道光影在大廳的天花板上旋轉：
-有人埋首抄寫古卷、有人站上舞台、有人在街巷帶路、有人用一句話就止住紛爭……
+  /*
+    真分支節點：
+    - 規則怪談：規則會「回收」你剛剛的選擇，讓你覺得被看見
+    - 都市傳說：淡水、TKU、外語大樓、電梯、地下室、夜間走廊等氛圍
+  */
+  const NODES = {
+    start:{
+      place:"淡水的霧",
+      story:
+`你在淡水的霧裡醒來，手心有一枚徽章：TKU。\n你記得你只是走進校園——但霧像把路吞掉了。\n\n遠處出現一棟「不該在那裡」的建築：像外語大樓，又像圖書館。\n門口貼著一張紙：\n「進入前，請先讀規則。」`,
+      question:"你會？",
+      hint:"（這是輕鬆測驗，選你最像的反應就好。）",
+      choices:[
+        { label:"先把規則讀完再進去，因為我討厭踩雷。", next:"ruleBoard", score:{S:1,W:1}, note:"先讀規則" },
+        { label:"先進去再說：規則通常都寫得很誇張。", next:"enterFast", score:{C:1,P:1}, note:"先闖" },
+        { label:"先拍照/轉發問同學：有人遇過嗎？", next:"groupChat", score:{G:1,E:1}, note:"先找人" },
+      ]
+    },
 
-館主只說了一句：
-「別想著選正確答案，選你最像的那個。」`
-];
+    ruleBoard:{
+      place:"門口規則告示",
+      story:
+`規則如下（字很新，像剛印的）：\n① 看到「第二部電梯」請不要搭。\n② 聽到廣播說「請回到一樓」時，先確認你現在是不是一樓。\n③ 外語大樓的走廊在晚上會變長，請不要數門牌。\n④ 如果你剛剛選了「先拍照」，請立刻把照片刪掉。\n\n你心頭一跳：它怎麼知道你剛剛想做什麼？`,
+      question:"你會怎麼處理？",
+      hint:"你會相信它嗎？",
+      choices:[
+        { label:"當成線索：把規則記下來，邊走邊驗證。", next:"lobby", score:{S:1,W:1}, note:"先記錄" },
+        { label:"覺得太像整人：只挑『看起來有用』的遵守。", next:"lobby", score:{E:1,N:1}, note:"務實派" },
+        { label:"我反而更想試：到底什麼叫『第二部電梯』？", next:"elevatorHall", score:{C:1,P:1}, note:"好奇派" },
+      ]
+    },
 
-const QUESTIONS = [
-  {
-    kicker: "第一扇門",
-    story: "你走進大廳，看到七扇門，地上有地圖與告示。",
-    q: "你會先做什麼？",
-    options: [
-      { key:"A", text:"先讀完告示和地圖，搞懂規則再動", score:{S:1} },
-      { key:"B", text:"先跟其他人搭話，問問看「大家打算怎麼走」", score:{G:1} },
-      { key:"C", text:"先推一扇看起來最有趣的門，走了再說", score:{C:1} },
-    ]
-  },
-  {
-    kicker: "碎句之室",
-    story: "第一個房間：牆上滿是碎裂的句子與符號，要開門得把碎句拼回原意。",
-    q: "你會怎麼做？",
-    options: [
-      { key:"A", text:"把線索抄下來分類，慢慢推回最合理的結構", score:{W:1} },
-      { key:"B", text:"先把大意講給隊友聽，邊講邊修正", score:{N:1} },
-      { key:"C", text:"先用感覺拼一版，錯了就快速重來", score:{C:1} },
-    ]
-  },
-  {
-    kicker: "焦慮的旅人",
-    story: "你遇到一位緊張的旅人，他說「我怕我會拖累大家」。",
-    q: "你會怎麼回應？",
-    options: [
-      { key:"A", text:"用幾句話把狀況分析清楚，告訴他「你其實做得到」", score:{S:1} },
-      { key:"B", text:"先安撫他情緒，帶他一起做一小步，讓他立刻有成就感", score:{G:1} },
-      { key:"C", text:"轉移氣氛，講個笑話或演一下，讓他先放鬆", score:{P:1} },
-    ]
-  },
-  {
-    kicker: "分岔走廊",
-    story: "走廊分岔：左邊傳來喧鬧聲，右邊安靜到能聽到紙張翻動。",
-    q: "你選哪條？",
-    options: [
-      { key:"A", text:"右邊（安靜），因為你想把狀況弄懂再出手", score:{S:1} },
-      { key:"B", text:"左邊（喧鬧），因為你覺得人多的地方資訊更多", score:{G:1} },
-      { key:"C", text:"先在岔路中間觀察，等出現新線索再決定", score:{E:1} },
-    ]
-  },
-  {
-    kicker: "委託",
-    story: "你得到一份委託：把一段故事帶給城裡的人。",
-    q: "你第一反應是？",
-    options: [
-      { key:"A", text:"先確認內容每個細節是否準確，再開始整理", score:{W:1} },
-      { key:"B", text:"想像怎麼呈現會最打動人，先抓節奏與氛圍", score:{P:1} },
-      { key:"C", text:"思考要怎麼講才讓第一次聽的人也秒懂，先做版本化", score:{N:1} },
-    ]
-  },
-  {
-    kicker: "分工",
-    story: "隊伍要分工：有人負責「記錄」、有人負責「對外溝通」、有人負責「呈現」。",
-    q: "你最自然會去哪一邊？",
-    options: [
-      { key:"A", text:"記錄：把東西寫清楚、整理到可追溯", score:{E:1} },
-      { key:"B", text:"對外溝通：跟陌生人交涉、問路、協調", score:{G:1} },
-      { key:"C", text:"呈現：把內容做得有畫面、有節奏、能吸引人", score:{C:1} },
-    ]
-  },
-  {
-    kicker: "守衛",
-    story: "一位陌生守衛攔住你，語氣很衝：「你們憑什麼進去？」",
-    q: "你會怎麼處理？",
-    options: [
-      { key:"A", text:"先釐清他的顧慮，用條理說服他放行", score:{N:1} },
-      { key:"B", text:"先用友善與禮貌降溫，拉近距離再談", score:{G:1} },
-      { key:"C", text:"直接用一句漂亮的台詞（或一段演示）扭轉氣勢", score:{P:1} },
-    ]
-  },
-  {
-    kicker: "古老手稿",
-    story: "你在牆上發現一段古老手稿，很多字很難懂。",
-    q: "你比較像？",
-    options: [
-      { key:"A", text:"查資料、對照上下文，慢慢把意思弄透", score:{W:1} },
-      { key:"B", text:"先抓主旨，能講出大意就先往下推進", score:{S:1} },
-      { key:"C", text:"把它變成大家都能懂的版本：換說法、做例子、做比喻", score:{E:1} },
-    ]
-  },
-  {
-    kicker: "回音廳",
-    story: "你進入回音廳：你說的每句話都會被放大。",
-    q: "你會選擇怎麼說話？",
-    options: [
-      { key:"A", text:"精準，寧可慢一點也要正確", score:{W:1} },
-      { key:"B", text:"清楚流暢，先讓聽的人跟得上", score:{N:1} },
-      { key:"C", text:"有感染力，讓全場都被你帶進情緒", score:{P:1} },
-    ]
-  },
-  {
-    kicker: "素材",
-    story: "你拿到一組素材：文字、影像、訪談、雜訊錄音。要把它變成一個完整作品。",
-    q: "你先做哪件事？",
-    options: [
-      { key:"A", text:"建立架構：大綱、章節、邏輯順序", score:{S:1} },
-      { key:"B", text:"找主線：最能代表精神的故事核心", score:{C:1} },
-      { key:"C", text:"做版面/呈現：先讓它看起來像成品，再回頭補內容", score:{E:1} },
-    ]
-  },
-  {
-    kicker: "迷路市集",
-    story: "你被指派帶隊穿過迷路市集：路標混亂、時間緊迫，隊友開始焦躁。",
-    q: "你會？",
-    options: [
-      { key:"A", text:"停下來重新定位，快速制定最穩的路徑", score:{S:1} },
-      { key:"B", text:"一邊走一邊問路，讓隊伍保持移動、保持希望", score:{G:1} },
-      { key:"C", text:"用故事或任務口號把士氣拉起來，先穩住心再解路", score:{P:1} },
-    ]
-  },
-  {
-    kicker: "前輩紙條",
-    story: "你看到一位前輩留下的紙條：「最後一關不是考你會什麼，而是考你願不願意把它做到極致。」",
-    q: "你心裡的反應是？",
-    options: [
-      { key:"A", text:"既然要做到極致，就該訂標準、反覆打磨", score:{W:1} },
-      { key:"B", text:"極致=讓人理解與感受，所以我會把傳達做到最好", score:{N:1} },
-      { key:"C", text:"極致=把想像落地，所以我會用作品證明", score:{C:1} },
-    ]
-  },
-  {
-    kicker: "決勝呈現",
-    story: "最後一關：你必須向眾人呈現你的旅程。",
-    q: "你會選擇哪種方式？（此題也用作平手決勝）",
-    options: [
-      { key:"A", text:"以嚴謹方式說明：脈絡、證據、推論、結論", score:{S:1}, tiebreak:"S" },
-      { key:"B", text:"以互動方式呈現：對話、問答、引導大家參與", score:{G:1}, tiebreak:"G" },
-      { key:"C", text:"以舞台/影像/設計呈現：讓大家看到與感到", score:{P:1}, tiebreak:"P" },
-    ]
-  },
-  {
-    kicker: "館主最後一句",
-    story: "通關前，館主問你：「如果路上出現失控狀況，你靠什麼撐住？」",
-    q: "你靠什麼？",
-    options: [
-      { key:"A", text:"靠計畫與檢核：我知道下一步是什麼", score:{E:1} },
-      { key:"B", text:"靠溝通與協調：我能讓人一起往前", score:{N:1} },
-      { key:"C", text:"靠靈感與臨場：我能把混亂變成推進", score:{C:1} },
-    ]
-  },
-];
+    enterFast:{
+      place:"入口玄關",
+      story:
+`你推門進去，溫度立刻降下來。\n地上有一條貼紙指引：「一樓→」\n但奇怪的是，你明明走平路，耳朵卻有「往下」的壓力。\n\n牆上有一面鏡子，鏡中你的徽章寫著：TKU。\n鏡子下方貼著小字：\n「不要在鏡子前說『我沒事』。」`,
+      question:"你會？",
+      hint:"（像你平常遇到怪事的反應。）",
+      choices:[
+        { label:"先裝沒事，快速離開鏡子區域。", next:"lobby", score:{G:1,E:1} },
+        { label:"反而想試探：我偏要看鏡子會怎樣。", next:"mirrorTest", score:{C:1,P:1} },
+        { label:"先觀察周邊：貼紙指引、出口位置、監視器死角。", next:"lobby", score:{S:1} },
+      ]
+    },
 
-// 結局文案：最後才揭露畢專類型
-const RESULTS = {
-  S: {
-    badge: "你點亮了「賢者」之光",
-    title: "賢者（The Scholar）",
-    body:
-`你在圖書館深處點亮一盞小燈。
-你不是靠吶喊贏的，而是靠「把每一步都想清楚」走到這裡。
+    groupChat:{
+      place:"校園群組",
+      story:
+`你打開群組想問，結果看到一則置頂公告：\n「今晚 21:20 之後，不要在外語大樓接陌生來電。」\n而現在你的手機剛好跳出一通未知來電。\n來電顯示：『外語大樓』。`,
+      question:"你會怎麼做？",
+      hint:"（這題很像都市傳說會出現的那種。）",
+      choices:[
+        { label:"不接：先截圖存證，回群組問誰發的公告。", next:"lobby", score:{E:1,S:1} },
+        { label:"接起來但不出聲，先聽對方要幹嘛。", next:"callListen", score:{W:1,N:1} },
+        { label:"接起來直接問：你是哪位？你要我做什麼？", next:"callTalk", score:{N:1,G:1} },
+      ]
+    },
 
-你擅長：
-- 把混亂整理成脈絡
-- 把直覺變成可證明的推論
-- 把問題挖到最深
+    lobby:{
+      place:"一樓大廳",
+      story:
+`你來到一樓大廳。\n這裡像外語大樓又像圖書館：地圖、公告欄、飲水機、還有一台老舊廣播。\n公告欄上寫著：\n「若你感到害怕，請記得：規則怪談最怕『你很清楚自己在做什麼』。」`,
+      question:"你先靠近哪個？",
+      hint:"選了就走不同事件。",
+      choices:[
+        { label:"看地圖：先定位自己在哪、要去哪。", next:"mapChoose", score:{G:1,S:1} },
+        { label:"開廣播：想先聽它會不會亂講話。", next:"radioChoose", score:{N:1,W:1} },
+        { label:"看公告欄：想知道還有哪些『規則』沒寫在門口。", next:"boardChoose", score:{E:1,S:1} },
+      ]
+    },
 
-【最適合的畢業專題類型】學術論文
-做得漂亮的關鍵：題目聚焦、文獻耐讀、架構清楚、定期回報進度。`
-  },
-  P: {
-    badge: "你喚醒了「舞台者」的節奏",
-    title: "舞台者（The Performer）",
-    body:
-`你推開最後一扇門，光像聚光燈一樣落在你身上。
-你天生就懂「節奏」：一句話、一次停頓、一次轉身，都能讓人跟著你呼吸。
+    elevatorHall:{
+      place:"電梯前走廊",
+      story:
+`你走到電梯口。\n有兩部電梯。\n左邊正常寫「1-10F」。右邊面板空白，只有一個按鈕：\n「-1」\n旁邊貼著：\n「第二部電梯不載人，只載『想偷懶的人』。」`,
+      question:"你會？",
+      hint:"你會賭嗎？",
+      choices:[
+        { label:"不搭：這太明顯是陷阱，我走樓梯。", next:"stairs", score:{S:1,G:1} },
+        { label:"按正常電梯：先照規則走。", next:"normalLift", score:{E:1,N:1} },
+        { label:"按 -1：想看看到底會發生什麼。", next:"basement", score:{C:2,P:1} },
+      ]
+    },
 
-你擅長：
-- 帶情緒、帶場
-- 把團隊拉到同一個頻率
-- 把壓力轉成能量
+    mirrorTest:{
+      place:"鏡前試探",
+      story:
+`你看著鏡子，想說一句「我沒事」。\n但你在最後一秒改口。\n鏡中的你也改口——只是晚了半拍。\n鏡子上突然多了一行字：\n「懂得收手的人，活得比較久。」`,
+      question:"你下一步？",
+      hint:"像你真的在現場那樣。",
+      choices:[
+        { label:"先離開鏡子，去找地圖與出口。", next:"lobby", score:{G:1,S:1} },
+        { label:"把那行字記下來：它可能是『通關提示』。", next:"lobby", score:{W:1,S:1} },
+        { label:"我覺得很讚：這句可以當作品的核心句。", next:"lobby", score:{C:1} },
+      ]
+    },
 
-【最適合的畢業專題類型】戲劇公演
-做得漂亮的關鍵：耐排練、敢溝通、能承擔責任、願意把細節磨到位。`
-  },
-  C: {
-    badge: "你獲得了「造物師」的火種",
-    title: "造物師（The Creator）",
-    body:
-`你把碎片拼成了某種只有你想得出來的形狀。
-別人問你「這到底是什麼？」你回答：「這就是我想做的世界。」
+    callListen:{
+      place:"電話：只聽不說",
+      story:
+`你接起來不說話。\n對方也不說話。\n只有一個很小的聲音在反覆念：\n「不要數門牌…不要數門牌…」\n然後電話掛斷。\n你的手機螢幕亮起：\n「你剛剛『沒有出聲』，做得很好。」`,
+      question:"你會？",
+      hint:"（你被規則看見了。）",
+      choices:[
+        { label:"把內容整理成重點，寫下『可行規則』。", next:"lobby", score:{S:1,W:1} },
+        { label:"覺得毛：先去人多的地方（大廳）再說。", next:"lobby", score:{G:1} },
+        { label:"我反而想測：到底不能數門牌是什麼意思？", next:"hallLong", score:{C:1,P:1} },
+      ]
+    },
 
-你擅長：
-- 把靈感落地
-- 把概念變成作品
-- 在限制中做出新解
+    callTalk:{
+      place:"電話：直接問",
+      story:
+`你接起來直接問。\n對方沉默三秒，然後回：\n「你很急。」\n接著它說出一句像廣播的話：\n「請回到一樓。」\n但你現在明明就在一樓。\n你開始懷疑：它是在測你有沒有『確認』。`,
+      question:"你會怎麼確認？",
+      hint:"你會先驗證，還是先處理情境？",
+      choices:[
+        { label:"先看周邊標示：這裡真的是一樓嗎？", next:"floorCheck", score:{S:1,W:1} },
+        { label:"先安撫自己：不管幾樓，先到『大廳』再說。", next:"lobby", score:{G:1,E:1} },
+        { label:"直接回一句：『我在一樓。你要我去哪？』", next:"radioChoose", score:{N:2} },
+      ]
+    },
 
-【最適合的畢業專題類型】創作（文章／影片／企劃／作品等）
-做得漂亮的關鍵：先做出可運作的雛形、再迭代，並把過程紀錄成可展示的成果。`
-  },
-  W: {
-    badge: "你拾起了「抄寫官」的筆",
-    title: "抄寫官（The Translator of Text）",
-    body:
-`你在滿牆古卷前停下來，手指一行行滑過字。
-你不急，你在意的是「這句話真正想說什麼」。
+    mapChoose:{
+      place:"地圖",
+      story:
+`地圖很舊，上面卻有一個剛畫上去的紅圈：\n「外語大樓 FL111」\n旁邊寫：\n「文化教室今天不在原位。」\n你明明知道 FL111 在哪，但這句話讓你起雞皮疙瘩。`,
+      question:"你接下來會？",
+      hint:"你是『相信路徑』還是『相信人』？",
+      choices:[
+        { label:"照你熟悉的路走：我不想被文字牽著跑。", next:"hallLong", score:{G:1,S:1} },
+        { label:"先跟附近的人（如果有）問：FL111 怎麼走？", next:"npcAsk", score:{G:1,N:1} },
+        { label:"先把地圖拍下/抄下：之後可以比對『它變了哪裡』。", next:"boardChoose", score:{E:1,W:1} },
+      ]
+    },
 
-你擅長：
-- 精準、細節控
-- 反覆推敲、用詞一致
-- 把意思磨到最對的位置
+    radioChoose:{
+      place:"廣播機",
+      story:
+`你按下廣播。\n沙沙聲後出現一句很清楚的話：\n「現在時間 21:20。」\n但你手機顯示不是。\n廣播又補一句：\n「如果你剛剛選了『直接問』，請不要再問第二次。」`,
+      question:"你會怎麼做？",
+      hint:"（它又在回收你的選擇。）",
+      choices:[
+        { label:"把它的『規則句』記下來：越像條款越有用。", next:"boardChoose", score:{W:1,S:1} },
+        { label:"把它當成一段可用的台詞：模仿它的語氣回一句。", next:"theatreDoor", score:{P:1,N:1} },
+        { label:"關掉廣播：先做自己的路線，不給它帶節奏。", next:"hallLong", score:{E:1,G:1} },
+      ]
+    },
 
-【最適合的畢業專題類型】翻譯（筆譯）
-做得漂亮的關鍵：選材恰當、術語一致、譯注清楚、版本管理（初稿→修訂→定稿）。`
-  },
-  N: {
-    badge: "你戴上了「交涉使」的徽記",
-    title: "交涉使（The Interpreter）",
-    body:
-`你只用幾句話，讓衝突的人都安靜下來。
-你不是把話「翻過去」而已，你把「意圖」也一起帶過去了。
+    boardChoose:{
+      place:"公告欄",
+      story:
+`公告欄最底下貼著一張「校園都市傳說整理」：\n- 淡水霧太重的夜晚，外語大樓會多出一段走廊。\n- 走廊門牌會從 109 直接跳到 120。\n- 你如果去數門牌，會數到自己的名字。\n\n旁邊又貼一張更新的：\n「不要數門牌。\n如果你已經開始數了，請立刻停在『第三扇門』。」`,
+      question:"你會？",
+      hint:"你會聽話，還是會想確認？",
+      choices:[
+        { label:"聽話：我不數門牌，直接找『第三扇門』是什麼。", next:"thirdDoor", score:{S:1,E:1} },
+        { label:"想確認：我會用『不明顯』的方法確認（例如看樓層圖）。", next:"floorCheck", score:{S:1,W:1} },
+        { label:"老實說我想試一下：我就數到三就停。", next:"hallLong", score:{C:1,P:1} },
+      ]
+    },
 
-你擅長：
-- 即時反應、抓重點
-- 清楚流暢的口語表達
-- 在壓力下仍穩住節奏
+    hallLong:{
+      place:"變長的走廊",
+      story:
+`你走進走廊。\n走廊真的變長了。\n本來 10 秒就到的轉角，你走了快 40 秒。\n牆上的門牌像故障：109、110、110、110…\n你耳邊出現很小的聲音：\n「不要數…」`,
+      question:"你會怎麼做？",
+      hint:"用你習慣的方式『自救』。",
+      choices:[
+        { label:"停下來：先確認方向與標示，重建定位。", next:"floorCheck", score:{S:2} },
+        { label:"邊走邊找人：遇到人就問路，讓自己不要孤立。", next:"npcAsk", score:{G:2} },
+        { label:"把恐懼當素材：我開始在腦中寫下『這一段怎麼收尾』。", next:"theatreDoor", score:{C:2} },
+      ]
+    },
 
-【最適合的畢業專題類型】翻譯（口譯）
-做得漂亮的關鍵：大量演練、錄音回聽、筆記系統、情境模擬（導覽／訪談／會議）。`
-  },
-  E: {
-    badge: "你展開了「編年史家」的卷軸",
-    title: "編年史家（The Editor）",
-    body:
-`你把旅程寫成一本人人看得懂、也願意翻下去的冊子。
-你在乎的不只是內容對不對，還在乎「讀者想不想看」。
+    npcAsk:{
+      place:"走廊的同學？",
+      story:
+`你看到前方有個穿校服的人影。\n你喊他，他停住。\n你靠近才發現：他胸前的徽章寫著 TKU，但字體不對。\n他抬頭說：\n「你要問路可以。\n但回答之前，你要先說出：你現在最在意的是『準確』還是『順利』？」`,
+      question:"你會怎麼答？",
+      hint:"這題真的很像人格分岔。",
+      choices:[
+        { label:"準確：我寧可慢一點，也要弄清楚。", next:"junctionA", score:{W:2,S:1} },
+        { label:"順利：先到目的地，路上再修正。", next:"junctionB", score:{G:2,N:1} },
+        { label:"其實我更在意『好不好看』：我想把它呈現得漂亮。", next:"junctionC", score:{E:1,P:1,C:1} },
+      ]
+    },
 
-你擅長：
-- 主題策劃與整合
-- 修稿校對與風格一致
-- 版面與視覺呈現
+    floorCheck:{
+      place:"樓層確認",
+      story:
+`你看見牆上貼著樓層平面圖。\n但平面圖的角落寫著：\n「你以為你在一樓。\n請證明。」\n旁邊有三個提示：\nA. 飲水機聲音\nB. 燈的閃爍節奏\nC. 你的影子方向`,
+      question:"你會用哪個提示證明？",
+      hint:"（像你平常做事的思路。）",
+      choices:[
+        { label:"A：找可重複驗證的物理線索（聲音/回聲）。", next:"junctionA", score:{S:2} },
+        { label:"B：把節奏記下來，推斷它在暗示什麼。", next:"junctionC", score:{P:1,C:1} },
+        { label:"C：我不看影子（規則說不要），改用『標示與邏輯』判斷。", next:"junctionB", score:{W:1,E:1} },
+      ]
+    },
 
-【最適合的畢業專題類型】雜誌編輯
-做得漂亮的關鍵：明確主題、稿件流程（採訪→撰稿→校對→排版）、死線管理、風格一致。`
-  },
-  G: {
-    badge: "你握住了「領航員」的羅盤",
-    title: "領航員（The Guide）",
-    body:
-`你帶著隊伍穿過迷路市集，最後每個人都還在、還笑得出來。
-你靠的不是運氣，是你能讓人放心：你會問、會帶、會把複雜變簡單。
+    thirdDoor:{
+      place:"第三扇門",
+      story:
+`你找到「第三扇門」。\n門上貼著一張小紙：\n「如果你已經開始數門牌，請在此停下。\n把你剛剛做的事，用一句話說清楚。\n說清楚就安全。」\n\n你突然明白：這整套怪談不是要你猜答案，是要你『知道自己在做什麼』。`,
+      question:"你的一句話會是？",
+      hint:"不用漂亮，像你平常講話。",
+      choices:[
+        { label:"『我在釐清規則與證據，避免自己被騙。』", next:"finalGate", score:{S:2} },
+        { label:"『我在抓重點，讓事情先往前走，不要卡在恐懼。』", next:"finalGate", score:{N:2,G:1} },
+        { label:"『我在把這段經驗整理成可被理解/被呈現的東西。』", next:"finalGate", score:{E:2,C:1} },
+      ]
+    },
 
-你擅長：
-- 路線規劃與現場控場
-- 臨場互動與跨文化說故事
-- 安撫情緒、維持隊伍節奏
+    stairs:{
+      place:"樓梯間",
+      story:
+`你選擇走樓梯。\n樓梯間很像 TKU 的某一段：熟悉、冷白光、回音。\n但你抬頭看到一張貼紙：\n「若你走樓梯，請不要數台階。\n台階會在你背後增加。」`,
+      question:"你會？",
+      hint:"你會相信嗎？",
+      choices:[
+        { label:"不數：我專注在呼吸與節奏，直接走到下一層。", next:"hallLong", score:{G:1,P:1} },
+        { label:"我會用別的方法確認（不數台階）：看樓層標示。", next:"floorCheck", score:{S:1,E:1} },
+        { label:"我會記錄貼紙內容：它像是『條款』。", next:"boardChoose", score:{W:1} },
+      ]
+    },
 
-【最適合的畢業專題類型】觀光導覽
-做得漂亮的關鍵：導覽腳本、景點知識、互動設計、突發狀況處理、口語節奏。`
+    normalLift:{
+      place:"正常電梯",
+      story:
+`正常電梯門開了。\n裡面只有一張紙：\n「如果你搭電梯，請按你最熟悉的樓層。\n按錯樓層的人，會到『別人的記憶』。」\n面板上 1~10 都亮著。`,
+      question:"你會按？",
+      hint:"按「熟悉」不是按「安全」。",
+      choices:[
+        { label:"按一個你很熟的樓層，因為你想回到可控區。", next:"junctionB", score:{G:1,S:1} },
+        { label:"按你覺得最可能有線索的樓層（例如人多/公告多）。", next:"junctionC", score:{E:1,N:1} },
+        { label:"我反而想按『看起來不對的那個』：測測看規則。", next:"basement", score:{C:1,P:1} },
+      ]
+    },
+
+    basement:{
+      place:"-1 地下室",
+      story:
+`電梯到了 -1。\n門開的瞬間，你聞到一股很像影印機的味道。\n地下室貼著一張大字：\n「偷懶的人，會被分配到『無限重做』。」\n旁邊有三個按鈕：\n「重做」「重做」「重做」`,
+      question:"你會？",
+      hint:"你會順著它，還是跳出去？",
+      choices:[
+        { label:"冷靜：先找出口，不按任何『重做』。", next:"junctionA", score:{S:2} },
+        { label:"按一次重做看它要你幹嘛，但我會保留退路。", next:"junctionC", score:{E:1,C:1} },
+        { label:"我會跟它對嗆：『好啊，你要我重做什麼？』", next:"junctionB", score:{N:2,P:1} },
+      ]
+    },
+
+    theatreDoor:{
+      place:"小劇場門口",
+      story:
+`你推開一扇門，裡面是小劇場。\n舞台上沒有演員，只有字幕投影：\n「規則怪談最怕兩種人：\n① 能把它說清楚的人\n② 能把它演給大家看的人」\n你聽到觀眾席傳來掌聲（但席上沒人）。`,
+      question:"你會選擇哪種『破局方式』？",
+      hint:"像你真的要處理這場怪事。",
+      choices:[
+        { label:"把它說清楚：用脈絡、證據、結論把它講到沒縫。", next:"finalGate", score:{S:2,W:1} },
+        { label:"把它演出來：我用節奏和互動把大家帶過恐懼。", next:"finalGate", score:{P:2,N:1} },
+        { label:"把它變成作品：我做一個『收尾』讓它結束。", next:"finalGate", score:{C:2,E:1} },
+      ]
+    },
+
+    junctionA:{
+      place:"匯流：證據門",
+      story:
+`你找到一扇門，上面寫：「只相信你能證明的。」\n門縫透出安全出口的綠光。\n但門把旁貼著一張小紙：\n「若你剛剛選了『不數』，請在開門前先確認身後。」\n\n……你突然想起：規則說不要回頭看影子。`,
+      question:"你會怎麼做？",
+      hint:"你會遵守規則，還是找替代方案？",
+      choices:[
+        { label:"不回頭：用反射（玻璃/手機黑屏）確認後方。", next:"finalGate", score:{S:1,W:1} },
+        { label:"乾脆不確認：我相信自己的流程，直接開門。", next:"finalGate", score:{S:1,E:1} },
+        { label:"用語言解決：我先出聲確認『有人在嗎？』", next:"finalGate", score:{N:1,G:1} },
+      ]
+    },
+
+    junctionB:{
+      place:"匯流：順利門",
+      story:
+`你找到一扇門，上面寫：「先到終點，路上再修正。」\n門旁貼著：\n「如果你剛剛『問了第二次』，請先道歉。」\n\n你心想：這也太像在整人。\n但你也知道：很多時候，道歉是讓事情繼續的方法。`,
+      question:"你會？",
+      hint:"選你最像的處理方式。",
+      choices:[
+        { label:"道歉但不卑微：『抱歉，我想確認清楚，才能配合。』", next:"finalGate", score:{N:2} },
+        { label:"直接跳過：我不跟規則玩情緒，我只跟流程。", next:"finalGate", score:{E:2} },
+        { label:"用幽默帶過：『對不起啦～我真的太想出去。』", next:"finalGate", score:{P:1,G:1} },
+      ]
+    },
+
+    junctionC:{
+      place:"匯流：成品門",
+      story:
+`你找到一扇門，上面寫：「把混亂排成順序的人，看得見出口。」\n門邊有一疊空白紙。\n紙上浮出一行字：\n「請把這趟經歷，用『三段式』交出去。」\n你腦中瞬間開始排：開頭—中段—收尾。`,
+      question:"你最自然的三段式是？",
+      hint:"不用想太久，選直覺。",
+      choices:[
+        { label:"先交代脈絡→再列證據→最後下結論。", next:"finalGate", score:{S:2} },
+        { label:"先做一個能看的版本→再補細節→最後統一風格。", next:"finalGate", score:{E:2} },
+        { label:"先丟出最抓人的畫面→再回補原因→最後反轉收尾。", next:"finalGate", score:{C:1,P:1} },
+      ]
+    },
+
+    finalGate:{
+      place:"終局：七盞燈",
+      story:
+`你來到最後一扇門。\n門上有七盞小燈，每盞像一種「你做事的方法」。\n館主的影子（沒有臉）說：\n「把這趟旅程交出去。你要用哪一種方式？」`,
+      question:"你會選哪種交付方式？（最後決勝）",
+      hint:"選你最想用的呈現方式。",
+      choices:[
+        { label:"把它講清楚：為什麼、怎麼做、得出什麼結論。", next:"end", score:{S:2}, tiebreak:"S" },
+        { label:"把人帶進來：用互動與引導讓大家理解並跟上。", next:"end", score:{G:2}, tiebreak:"G" },
+        { label:"把它做出來：舞台/影像/設計/作品感，一眼就懂。", next:"end", score:{P:1,C:1,E:1}, tiebreak:"P" },
+      ]
+    },
+
+    end:{
+      place:"結局",
+      story:
+`門開了。\n你以為會看到出口，結果看到的是——一張很普通的白紙。\n白紙上寫著：\n「你最適合的道路，不是最安全的那條，而是你最像的那條。」`,
+      question:"", hint:"", choices:[]
+    }
+  };
+
+  let state = {
+    started:false,
+    nodeId:"start",
+    step:0,
+    history:[],
+    scores:initScores(),
+    lastTiebreak:null
+  };
+
+  function computeWinner(){
+    const max = Math.max(...TYPES.map(k=>state.scores[k]));
+    const winners = TYPES.filter(k=>state.scores[k]===max);
+    if(winners.length===1) return winners[0];
+    if(state.lastTiebreak && winners.includes(state.lastTiebreak)) return state.lastTiebreak;
+    return winners[0];
   }
-};
 
-const ALL_CODES = ["S","P","C","W","N","E","G"];
-
-let state = {
-  started: false,
-  idx: -1,                // current question index
-  answers: [],            // {qIndex, optKey, scoreObj, tiebreak}
-  scores: initScores(),
-};
-
-function initScores(){
-  const s = {};
-  ALL_CODES.forEach(k => s[k]=0);
-  return s;
-}
-
-function applyScore(scoreObj, dir){
-  // dir = +1 or -1
-  if(!scoreObj) return;
-  for(const k in scoreObj){
-    if(!Object.prototype.hasOwnProperty.call(scoreObj,k)) continue;
-    state.scores[k] += (scoreObj[k] * dir);
+  function setText(id, t){ document.getElementById(id).textContent = t; }
+  function setProgress(){
+    const pct = state.started ? (Math.min(state.step, STEPS)/STEPS)*100 : 0;
+    document.getElementById("barFill").style.width = `${pct}%`;
+    setText("counter", `${state.started ? Math.min(state.step, STEPS):0} / ${STEPS}`);
   }
-}
 
-function computeWinner(){
-  const max = Math.max(...ALL_CODES.map(k => state.scores[k]));
-  let winners = ALL_CODES.filter(k => state.scores[k] === max);
-  if(winners.length === 1) return winners[0];
+  function nodeIsEnd(){ return state.nodeId==="end"; }
 
-  // tie-break: use Q13 selection (index 12)
-  const q13 = state.answers.find(a => a.qIndex === 12);
-  if(q13 && q13.tiebreak){
-    if(winners.includes(q13.tiebreak)) return q13.tiebreak;
+  function render(){
+    const node = NODES[state.nodeId];
+    setText("kicker", state.started ? "冒險中" : "序章");
+    setText("place", node.place);
+    setText("storyText", node.story);
+    setText("questionText", node.question || "");
+    setText("hintText", node.hint || "");
+
+    document.getElementById("startBtn").disabled = state.started;
+    document.getElementById("restartBtn").disabled = !state.started;
+    document.getElementById("backBtn").disabled = state.history.length===0;
+
+    const micro = document.getElementById("microText");
+    micro.textContent = nodeIsEnd()
+      ? "你可以重來走不同路線（規則會回收你的選擇）。"
+      : "提示：選你最像的反應，不用想很久。";
+
+    const choicesEl = document.getElementById("choices");
+    choicesEl.innerHTML = "";
+
+    if(nodeIsEnd()){
+      const winner = computeWinner();
+      const r = RESULTS[winner];
+
+      const wrap = document.createElement("div");
+      wrap.className = "result";
+      wrap.innerHTML = `
+        <div class="badge"><span class="dot"></span><span>${escapeHtml(r.badge)}</span></div>
+        <h3 class="rtitle">${escapeHtml(r.title)}</h3>
+        <p class="rbody">${escapeHtml(r.body)}</p>
+        <div class="divider"></div>
+        <p class="p small">（分數概覽：只是給你好玩看一下）</p>
+        <div class="scores" id="scoreGrid"></div>
+        <div style="display:flex; gap:10px; margin-top:6px;">
+          <button class="mbtn primary" id="shareBtn" style="flex:1;">複製結果連結</button>
+          <button class="mbtn" id="copyTextBtn" style="flex:1;">複製結果文字</button>
+        </div>
+      `;
+      choicesEl.appendChild(wrap);
+
+      const pairs = TYPES.map(k=>({k,v:state.scores[k]})).sort((a,b)=>b.v-a.v);
+      const grid = wrap.querySelector("#scoreGrid");
+      pairs.forEach(p=>{
+        const d=document.createElement("div");
+        d.className="sitem";
+        d.innerHTML = `<strong>${escapeHtml(typeName(p.k))}</strong><span>${p.v}</span>`;
+        grid.appendChild(d);
+      });
+
+      wrap.querySelector("#shareBtn").onclick = () => shareResult(winner);
+      wrap.querySelector("#copyTextBtn").onclick = () => copyResultText(winner);
+
+      const url = new URL(location.href);
+      url.searchParams.set("result", winner);
+      history.replaceState(null, "", url.toString());
+      return;
+    }
+
+    node.choices.forEach((c, i)=>{
+      const btn=document.createElement("button");
+      btn.className="btn";
+      btn.type="button";
+      const key=["A","B","C","D"][i] || String(i+1);
+      btn.innerHTML = `<div class="tag">${key}</div><div class="txt">${escapeHtml(c.label)}</div>`;
+      btn.onclick = ()=>pick(c);
+      choicesEl.appendChild(btn);
+    });
   }
-  // fallback: stable order
-  return winners[0];
-}
 
-function setText(id, text){
-  document.getElementById(id).textContent = text;
-}
-function setHTML(id, html){
-  document.getElementById(id).innerHTML = html;
-}
+  function pick(choice){
+    state.history.push({
+      nodeId: state.nodeId,
+      step: state.step,
+      scores: cloneScores(state.scores),
+      lastTiebreak: state.lastTiebreak
+    });
 
-function updateProgress(){
-  const total = QUESTIONS.length;
-  const answered = Math.max(0, state.idx);
-  const current = state.started ? Math.min(state.idx+1, total) : 0;
-  setText("stepCounter", `${current} / ${total}`);
-  const pct = state.started ? (current/total)*100 : 0;
-  document.getElementById("barFill").style.width = `${pct}%`;
-  setText("stepLabel", state.started ? (state.idx < total ? `進行中` : `完成`) : "未開始");
-}
+    applyScore(choice.score);
+    if(choice.tiebreak) state.lastTiebreak = choice.tiebreak;
 
-function renderIntro(){
-  setText("kicker","序章");
-  setText("story", INTRO[0]);
-  document.getElementById("questionBlock").style.display = "none";
-  document.getElementById("resultBlock").style.display = "none";
-}
+    state.nodeId = choice.next;
+    state.step = Math.min(state.step + 1, STEPS);
 
-function renderQuestion(i){
-  const q = QUESTIONS[i];
-  setText("kicker", q.kicker);
-  setText("story", q.story);
-  setText("question", q.q);
+    const url = new URL(location.href);
+    url.searchParams.delete("result");
+    history.replaceState(null, "", url.toString());
 
-  const opts = document.getElementById("options");
-  opts.innerHTML = "";
-  q.options.forEach((opt, idx) => {
-    const btn = document.createElement("button");
-    btn.className = "option";
-    btn.type = "button";
-    btn.onclick = () => chooseOption(i, opt);
-    btn.innerHTML = `
-      <div class="opt-tag">${opt.key}</div>
-      <div class="opt-text">${escapeHtml(opt.text)}</div>
-    `;
-    opts.appendChild(btn);
-  });
-
-  document.getElementById("questionBlock").style.display = "block";
-  document.getElementById("resultBlock").style.display = "none";
-}
-
-function renderResult(){
-  const winner = computeWinner();
-  const r = RESULTS[winner];
-
-  setText("kicker","終章");
-  setText("story","你走出迷霧圖書館，掌心的徽章微微發光。館主只留下一句：『走你自己的路。』");
-
-  setText("resultBadgeText", r.badge);
-  setText("resultTitle", r.title);
-  setText("resultBody", r.body);
-
-  // score breakdown
-  const box = document.getElementById("scoreBox");
-  box.innerHTML = "";
-  const pairs = ALL_CODES
-    .map(k => ({k, v: state.scores[k]}))
-    .sort((a,b)=> b.v - a.v);
-
-  pairs.forEach(p => {
-    const div = document.createElement("div");
-    div.className = "scoreitem";
-    div.innerHTML = `<strong>${codeName(p.k)}</strong><span>${p.v}</span>`;
-    box.appendChild(div);
-  });
-
-  document.getElementById("questionBlock").style.display = "none";
-  document.getElementById("resultBlock").style.display = "block";
-
-  // update URL so user can share
-  const url = new URL(location.href);
-  url.searchParams.set("result", winner);
-  history.replaceState(null, "", url.toString());
-}
-
-function chooseOption(qIndex, opt){
-  // if revisiting and changing answer at same index, handle carefully
-  // We assume linear answering; back button handles removing previous answer.
-  applyScore(opt.score, +1);
-  state.answers.push({
-    qIndex,
-    optKey: opt.key,
-    scoreObj: opt.score,
-    tiebreak: opt.tiebreak || null
-  });
-  state.idx++;
-
-  if(state.idx >= QUESTIONS.length){
-    updateProgress();
-    renderResult();
-    enableButtonsAfterFinish();
-    return;
+    setProgress();
+    render();
   }
-  updateProgress();
-  renderQuestion(state.idx);
-  enableButtonsDuringRun();
-}
 
-function goBack(){
-  if(state.answers.length === 0) return;
-  const last = state.answers.pop();
-  // revert score
-  applyScore(last.scoreObj, -1);
-  state.idx = state.answers.length; // now at the next question index
-  // state.idx should point to question being shown
-  if(state.idx <= 0){
-    state.idx = 0;
+  function start(){
+    state.started=true;
+    state.nodeId="start";
+    state.step=0;
+    state.history=[];
+    state.scores=initScores();
+    state.lastTiebreak=null;
+
+    const url=new URL(location.href);
+    url.searchParams.delete("result");
+    history.replaceState(null,"",url.toString());
+
+    setProgress();
+    render();
   }
-  updateProgress();
-  renderQuestion(state.idx);
-  enableButtonsDuringRun();
-}
 
-function start(){
-  state.started = true;
-  state.idx = 0;
-  state.answers = [];
-  state.scores = initScores();
-  updateProgress();
-  renderQuestion(0);
-  enableButtonsDuringRun();
-}
+  function back(){
+    const prev=state.history.pop();
+    if(!prev) return;
 
-function restart(){
-  // clear result param
-  const url = new URL(location.href);
-  url.searchParams.delete("result");
-  history.replaceState(null, "", url.toString());
+    state.nodeId=prev.nodeId;
+    state.step=prev.step;
+    state.scores=prev.scores;
+    state.lastTiebreak=prev.lastTiebreak;
 
-  state.started = false;
-  state.idx = -1;
-  state.answers = [];
-  state.scores = initScores();
-  updateProgress();
-  renderIntro();
-  enableButtonsBeforeStart();
-}
+    const url=new URL(location.href);
+    url.searchParams.delete("result");
+    history.replaceState(null,"",url.toString());
 
-function share(){
-  const winner = computeWinner();
-  const url = new URL(location.href);
-  url.searchParams.set("result", winner);
-  const text = url.toString();
-  navigator.clipboard?.writeText(text).then(()=>{
-    alert("已複製結果連結！");
-  }).catch(()=>{
-    prompt("請手動複製這個連結：", text);
-  });
-}
-
-function resetUrl(){
-  const url = new URL(location.href);
-  url.searchParams.delete("result");
-  history.replaceState(null, "", url.toString());
-  alert("已清除網址結果參數。");
-}
-
-function enableButtonsBeforeStart(){
-  document.getElementById("startBtn").disabled = false;
-  document.getElementById("backBtn").disabled = true;
-  document.getElementById("restartBtn").disabled = true;
-  document.getElementById("shareBtn").disabled = true;
-  document.getElementById("resetUrlBtn").disabled = true;
-}
-
-function enableButtonsDuringRun(){
-  document.getElementById("startBtn").disabled = true;
-  document.getElementById("restartBtn").disabled = false;
-  document.getElementById("shareBtn").disabled = true;
-  document.getElementById("resetUrlBtn").disabled = false;
-
-  // back enabled if at least 1 answer chosen and not finished
-  document.getElementById("backBtn").disabled = (state.answers.length === 0);
-}
-
-function enableButtonsAfterFinish(){
-  document.getElementById("startBtn").disabled = true;
-  document.getElementById("restartBtn").disabled = false;
-  document.getElementById("backBtn").disabled = false;
-  document.getElementById("shareBtn").disabled = false;
-  document.getElementById("resetUrlBtn").disabled = false;
-}
-
-function codeName(k){
-  switch(k){
-    case "S": return "S 賢者";
-    case "P": return "P 舞台者";
-    case "C": return "C 造物師";
-    case "W": return "W 抄寫官";
-    case "N": return "N 交涉使";
-    case "E": return "E 編年史家";
-    case "G": return "G 領航員";
-    default: return k;
+    setProgress();
+    render();
   }
-}
 
-function escapeHtml(str){
-  return (str ?? "").replace(/[&<>"']/g, (m) => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-  }[m]));
-}
+  function restart(){
+    state.started=false;
+    state.nodeId="start";
+    state.step=0;
+    state.history=[];
+    state.scores=initScores();
+    state.lastTiebreak=null;
 
-// Boot
-document.getElementById("startBtn").addEventListener("click", start);
-document.getElementById("backBtn").addEventListener("click", goBack);
-document.getElementById("restartBtn").addEventListener("click", restart);
-document.getElementById("shareBtn").addEventListener("click", share);
-document.getElementById("resetUrlBtn").addEventListener("click", resetUrl);
+    const url=new URL(location.href);
+    url.searchParams.delete("result");
+    history.replaceState(null,"",url.toString());
 
-// If opened with ?result=CODE, show that result directly (shareable)
-(function initFromUrl(){
-  const url = new URL(location.href);
-  const r = url.searchParams.get("result");
-  updateProgress();
-  renderIntro();
-  enableButtonsBeforeStart();
-
-  if(r && RESULTS[r]){
-    // show result only (no scores); still present full ending + copy share
-    state.started = true;
-    state.idx = QUESTIONS.length;
-    state.scores = initScores();
-    state.scores[r] = 999; // to make winner stable
-    updateProgress();
-    renderResult();
-    enableButtonsAfterFinish();
+    setProgress();
+    render();
   }
-})();
+
+  function shareResult(code){
+    const url=new URL(location.href);
+    url.searchParams.set("result", code);
+    const text=url.toString();
+    navigator.clipboard?.writeText(text).then(()=>alert("已複製結果連結！"))
+      .catch(()=>prompt("請手動複製：", text));
+  }
+
+  function copyResultText(code){
+    const r=RESULTS[code];
+    const text=`【TKU 規則怪談測驗結果】\n${r.title}\n\n${r.body}`;
+    navigator.clipboard?.writeText(text).then(()=>alert("已複製結果文字！"))
+      .catch(()=>prompt("請手動複製：", text));
+  }
+
+  document.getElementById("startBtn").onclick = start;
+  document.getElementById("backBtn").onclick = back;
+  document.getElementById("restartBtn").onclick = restart;
+
+  (function boot(){
+    const url=new URL(location.href);
+    const r=url.searchParams.get("result");
+    if(r && RESULTS[r]){
+      state.started=true;
+      state.nodeId="end";
+      state.step=STEPS;
+      state.history=[];
+      state.scores=initScores();
+      state.scores[r]=999;
+      state.lastTiebreak=r;
+      setProgress();
+      render();
+      return;
+    }
+    setProgress();
+    render();
+  })();
 </script>
 </body>
 </html>
