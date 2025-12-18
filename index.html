@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>TKU 午夜任務｜規則怪談×校園鬼故事（18題RPG）</title>
-  <meta name="description" content="TKU校園規則怪談×都市傳說｜18題RPG心理測驗｜手機友善｜最後揭曉最適合的畢業專題類型" />
+  <title>TKU 午夜任務｜規則怪談×校園鬼故事</title>
+  <meta name="description" content="TKU校園規則怪談×都市傳說｜最後揭曉最適合的畢業專題類型" />
 
   <style>
     :root{
@@ -30,7 +30,7 @@
         radial-gradient(900px 900px at 50% 100%, rgba(160,140,255,.08), transparent 60%),
         var(--bg);
       color:var(--text);
-      overflow:hidden; /* 整頁不捲動 */
+      overflow:hidden;
     }
     .app{
       height:100dvh;
@@ -136,6 +136,7 @@
       flex:1;
       display:flex;
       flex-direction:column;
+      min-height: 0;  
       padding: 12px;
       gap:10px;
       background:
@@ -150,7 +151,8 @@
       background: rgba(0,0,0,.20);
       border-radius: 16px;
       padding: 12px;
-      overflow:auto; /* 只在框內捲，不整頁滑 */
+      min-height: 0;  
+      overflow:auto; 
       -webkit-overflow-scrolling: touch;
       display:flex;
       flex-direction:column;
@@ -180,6 +182,8 @@
       display:flex;
       gap:10px;
       align-items:flex-start;
+      max-height: 140px; 
+      overflow:auto; 
     }
     .alert .bang{
       width:28px; height:28px;
@@ -325,12 +329,7 @@
     <header>
       <div>
         <div class="h1">TKU 午夜任務：宮燈姊姊</div>
-        <div class="h2">規則怪談×校園鬼故事｜18題RPG心理測驗｜規則會「回收」你做過的事｜最後揭曉結果</div>
-      </div>
-      <div class="chips">
-        <div class="chip">18題固定</div>
-        <div class="chip">不整頁滑</div>
-        <div class="chip">違規會出事</div>
+        <div class="h2">規則怪談×校園鬼故事｜規則會「回收」你做過的事｜最後揭曉結果</div>
       </div>
     </header>
 
@@ -490,7 +489,7 @@
 
     s2:{
       idx:2,
-      place:"宮燈大道｜第三盞",
+      place:"宮燈大道｜第三盞燈",
       story: () => {
         const photoLine = state.flags.tookPhoto
           ? `你剛剛拍過照，手機相簿縮圖裡有一格黑掉，像被塗掉。\n`
@@ -544,7 +543,7 @@ photoLine +
       idx:4,
       place:"文化教室｜半開門",
       story:
-`你走到文化教室那排。\n一間教室門半開，裡面有人在上課——而且是日文。\n座位背影全都坐得很端正，沒人滑手機，反而更不真實。\n\n講台上的聲音忽然停了一秒，像在聽你有沒有靠近。`,
+`你走到文化教室那排。\n一間教室門半開，裡面有人在上課——而且是日文。\n座位背影全都坐得很端正，反而更不真實。\n\n講台上的聲音忽然停了一秒，像在聽你有沒有靠近。`,
       question:"你會怎麼做？",
       hint:"這題重點是：你會不會『確認』。",
       choices:[
@@ -690,7 +689,7 @@ extra+
       idx:12,
       place:"商管大樓｜電梯錯層",
       story:
-`你走了很久，腳底有點麻。\n商管大樓的電梯還亮著。\n你進去按地下室，電梯門卻打開到一個「沒有樓層顯示」的黑走廊。\n\n你已經知道：很多怪事都是從「踏出那一步」開始。`,
+`你走了很久，腳底有點麻。\n商管大樓的電梯還亮著。\n你進去按五樓，電梯門卻打開到一個「沒有樓層顯示」的黑走廊。\n\n你已經知道：很多怪事都是從「踏出那一步」開始。`,
       question:"你會怎麼做？",
       hint:"很現實：你敢不敢踏出去？",
       choices:[
@@ -722,7 +721,7 @@ extra+
       idx:14,
       place:"販賣機燈光下｜陌生學妹求助",
       story:
-`你在販賣機燈光下喘口氣。\n一個學妹樣子的女生站在路邊，聲音發抖：\n「學長／學姊…可以陪我去找東西嗎？我不敢一個人…」\n\n你已經知道：不要確認身份。\n而且她一直想讓你「問」。`,
+`你在路燈的燈光下喘口氣。\n一個學妹樣子的女生站在路邊，聲音發抖：\n「學長／學姊…可以陪我去找東西嗎？我不敢一個人…」\n\n你已經知道：不要確認身份。\n而且她一直想讓你「問」。`,
       question:"你會怎麼回應？",
       hint:"幫、驗證、拒絕、或保持距離。",
       choices:[
@@ -753,7 +752,7 @@ extra+
 
     s16:{
       idx:16,
-      place:"驚聲廣場｜那個背影",
+      place:"蛋捲廣場｜那個背影",
       story:
 `你到了一個開闊的廣場。\n遠處有一道背影站著不動，像老式制服。\n你靠近一點，背影沒有回頭。\n\n你已經知道：不要確認身份。\n而你也記得宮燈那條：不要回頭、不要報時間。`,
       question:"你會怎麼做？",
@@ -832,7 +831,6 @@ extra+
     state.lastConsequence = msg;
 
     // 違規也會影響傾向（讓結果更真實）：違規後通常更偏向救場/應變/情緒
-    // 你也可以刪掉這段（不影響劇情）
     if(ruleKey==="NO_TIME" || ruleKey==="NO_TURN") state.scores.IT += 1;
     if(ruleKey==="NO_ID") state.scores.WT += 1;
     if(ruleKey==="NO_FINE") state.scores.T += 1;
