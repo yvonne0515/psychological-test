@@ -463,6 +463,56 @@
 /* 底部提示縮短行高，別搶畫面 */
 .mtext{ font-size: 11px; line-height: 1.25; }
 
+/* ===== Result Page: 大展示 ===== */
+.result{
+  border: 0;
+  background: linear-gradient(180deg, rgba(144,210,255,.12), rgba(0,0,0,.20));
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 0 18px 60px rgba(0,0,0,.45);
+  max-height: none;
+}
+
+.rtitle{
+  font-size: 22px;
+  line-height: 1.25;
+  margin: 6px 0 0;
+}
+
+.rbody{
+  font-size: 15.5px;
+  line-height: 1.75;
+}
+
+.badge{
+  font-size: 12px;
+  padding: 8px 12px;
+  background: rgba(0,0,0,.18);
+}
+
+.scores{
+  grid-template-columns: 1fr;
+}
+
+.sitem{
+  padding: 11px 12px;
+  border-radius: 14px;
+}
+
+@media (min-width: 700px){
+  .scores{ grid-template-columns: 1fr 1fr; }
+  .rtitle{ font-size: 26px; }
+  .rbody{ font-size: 16px; }
+}
+
+/* 結果頁按鈕做大一點 */
+.result .mbtn{
+  padding: 12px 12px;
+  border-radius: 14px;
+  font-size: 13px;
+}
+
+
   </style>
 </head>
 
@@ -1048,7 +1098,7 @@ extra+
     // 選項
     const choicesEl = document.getElementById("choices");
     choicesEl.innerHTML="";
-
+document.getElementById("storyBox").style.display = "";
     if(nodeIsEnd()){
       const winner = computeWinner();
       const r = RESULTS[winner];
@@ -1068,6 +1118,10 @@ extra+
         </div>
       `;
       choicesEl.appendChild(wrap);
+      // ✅ 結果頁模式：把故事框縮小、把選項區變成結果展示主舞台
+document.getElementById("storyBox").style.display = "none";
+document.getElementById("choices").style.overflow = "auto";
+document.getElementById("choices").style.minHeight = "0";
 
       const pairs = TYPES.map(k=>({k,v:state.scores[k]})).sort((a,b)=>b.v-a.v);
       const grid = wrap.querySelector("#scoreGrid");
