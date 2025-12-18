@@ -396,9 +396,9 @@
       question:"你會？",
       hint:"（這是輕鬆測驗，選你最像的反應就好。）",
       choices:[
-        { label:"先把規則讀完再進去，因為我討厭踩雷。", next:"ruleBoard", score:{S:1,W:1}, note:"先讀規則" },
-        { label:"先進去再說：規則通常都寫得很誇張。", next:"enterFast", score:{C:1,P:1}, note:"先闖" },
-        { label:"先拍照/轉發問同學：有人遇過嗎？", next:"groupChat", score:{G:1,E:1}, note:"先找人" },
+        { label:"先把門口規則讀完再進去，因為我討厭踩雷。", next:"ruleBoard", score:{S:1,W:1} },
+        { label:"先進去再說：規則通常都寫得很誇張。", next:"enterFast", score:{C:1,P:1} },
+        { label:"先往宮燈大道走：我想確認傳說到底是不是『那一段』。", next:"lanternRoad0", score:{G:1,C:1} },
       ]
     },
 
@@ -557,6 +557,110 @@
         { label:"把恐懼當素材：我開始在腦中寫下『這一段怎麼收尾』。", next:"theatreDoor", score:{C:2} },
       ]
     },
+    lanternRoad0:{
+  place:"宮燈大道（右任路）",
+  story:
+`霧變得更濃，你走上宮燈大道。\n宮燈一盞一盞亮著，光像被霧吞掉，只剩一圈暈。\n\n你突然想起那個傳說：\n「半夜十二點，第三盞宮燈下，她會問你：現在幾點？」\n\n而你手機的電量，剛好跳成 12%。`,
+  question:"你會？",
+  hint:"（選最像你的反應，不要選你覺得『正確』的。）",
+  choices:[
+    { label:"先確認時間：我不想被『12點』這種字眼牽著走。", next:"lanternRule1", score:{S:1,W:1} },
+    { label:"當作校園怪談觀光：邊走邊看第三盞到底在哪。", next:"lanternCount", score:{G:1,E:1} },
+    { label:"我會故意測試：如果真的遇到，我想看規則怎麼反應。", next:"lanternCount", score:{C:1,P:1} },
+  ]
+},
+
+lanternRule1:{
+  place:"宮燈大道｜規則補丁",
+  story:
+`路邊貼著一張很新的紙，像剛貼上去：\n① 不要『主動說出』現在時間。\n② 若有人問你時間，先確認對方是不是「人」。\n③ 若你已經開始數宮燈，請立刻停在第三盞。\n\n紙的最後一行寫得很淡：\n「你越想確認，就越容易變成她的『對象』。」`,
+  question:"你接下來怎麼走？",
+  hint:"這題很看你面對怪規則的習慣。",
+  choices:[
+    { label:"照規則：不報時間、不數，直接慢慢走到光最亮那盞。", next:"lanternEncounter", score:{S:1,G:1} },
+    { label:"半信半疑：我只遵守『不要主動說時間』，其他照走。", next:"lanternCount", score:{E:1,N:1} },
+    { label:"把規則記下來：這種句型像條款，後面一定會回收。", next:"lanternCount", score:{W:1,S:1} },
+  ]
+},
+
+lanternCount:{
+  place:"宮燈大道｜第三盞之前",
+  story:
+`你還是忍不住開始『定位』：\n第一盞、第二盞……\n霧裡的燈影變得有點像人影。\n\n你走到第三盞附近時，聽到有人很輕地吸了一口氣。\n像是有人等很久，終於等到你。`,
+  question:"你聽到背後有人說：「先生／同學…請問現在幾點？」",
+  hint:"你會怎麼回？（這裡沒有最安全，只有最像你。）",
+  choices:[
+    { label:"我會回答（但盡量簡短）：『…差不多十二點。』", next:"lanternAnswer", score:{N:2} },
+    { label:"我不回答，裝沒聽到繼續走，因為我不想進入她的節奏。", next:"lanternIgnore", score:{S:2} },
+    { label:"我會先反問：『你是誰？你為什麼要問？』", next:"lanternAskBack", score:{N:1,P:1} },
+    { label:"我會故意報錯（測試規則）：『七點。』", next:"lanternLie", score:{C:2} },
+  ]
+},
+
+lanternAnswer:{
+  place:"第三盞宮燈下",
+  story:
+`你說出時間的瞬間，宮燈亮了一下。\n霧像被吸進燈罩裡，周圍突然清楚了半秒。\n\n你看到一個影子站在你旁邊，但你不確定那是不是『人』。\n那影子用很小的聲音說：\n「謝謝你。」\n\n下一秒，你發現你手心多了一張紙條：\n「你選擇了『讓事情順利』。」`,
+  question:"你會怎麼做？",
+  hint:"你會留在這裡確認，還是趁現在走？",
+  choices:[
+    { label:"趁能走就走：先離開第三盞再說。", next:"blackBird", score:{G:1,E:1} },
+    { label:"先記下剛剛發生什麼：我需要可回溯的紀錄。", next:"blackBird", score:{W:1,S:1} },
+    { label:"我會把那句『謝謝你』當線索：她在遵守某個規則。", next:"blackBird", score:{S:1} },
+  ]
+},
+
+lanternIgnore:{
+  place:"不回應",
+  story:
+`你不回答。\n背後的聲音停住了。\n你以為安全了，但你發現：\n你的腳步聲不見了。\n\n像是你走路的聲音，被誰拿走了。\n而你越走越覺得——\n你其實還在第三盞附近。`,
+  question:"你會怎麼破局？",
+  hint:"這題超像：卡住時你怎麼處理。",
+  choices:[
+    { label:"停下來重建定位：看標示、看路線、看出口方向。", next:"blackBird", score:{S:2} },
+    { label:"直接找人：我寧可尷尬，也不要一個人在霧裡。", next:"blackBird", score:{G:2} },
+    { label:"把它當成一段『場景』：我開始思考怎麼把它收束。", next:"blackBird", score:{C:2} },
+  ]
+},
+
+lanternAskBack:{
+  place:"你反問了",
+  story:
+`你反問的瞬間，對方沒有回答。\n只有一句像廣播的聲音從霧裡飄出來：\n「請不要再問第二次。」\n\n你突然想到：很多怪談會針對『問太多』的人。\n因為問太多的人，最容易被帶進規則裡。`,
+  question:"你接下來？",
+  hint:"你要繼續問，還是換策略？",
+  choices:[
+    { label:"換策略：我不問了，我只做『可驗證的事』。", next:"blackBird", score:{S:2} },
+    { label:"用幽默化解：『好好好我不問，那我走囉。』", next:"blackBird", score:{P:1,G:1} },
+    { label:"我會把這句話記成規則：以後遇到就能用。", next:"blackBird", score:{W:1,E:1} },
+  ]
+},
+
+lanternLie:{
+  place:"你報錯時間",
+  story:
+`你說「七點」。\n霧裡沉默了兩秒。\n然後那個聲音很輕地笑了一下。\n\n你突然發現：第三盞宮燈的光，變成了『更冷』的白。\n像在提醒你：\n「你剛剛做了『測試規則』的選擇。」`,
+  question:"你會怎麼收拾這個測試？",
+  hint:"你會承認、補救，還是繼續試？",
+  choices:[
+    { label:"補救：改口說『抱歉我剛剛口誤』，但不講正確時間。", next:"blackBird", score:{N:2} },
+    { label:"繼續試：我想看它的底線在哪。", next:"blackBird", score:{C:2,P:1} },
+    { label:"撤退：我承認我玩不起，先離開第三盞。", next:"blackBird", score:{G:1,E:1} },
+  ]
+},
+
+blackBird:{
+  place:"黑鳥",
+  story:
+`你剛離開第三盞，霧裡傳來「啪」的一聲。\n一隻黑色的鳥從宮燈上俯衝下來，擦過你的頭頂。\n\n你沒有受傷，但你全身起雞皮疙瘩。\n你腦中浮出一句很老派的說法：\n「它只啄某些人。」\n\n鳥停在宮燈上，像在等你做一個決定。`,
+  question:"你會怎麼做？",
+  hint:"最後會接回主線，不會卡死。",
+  choices:[
+    { label:"不理它：我專注趕路，不讓它成為我的節奏。", next:"finalGate", score:{E:2} },
+    { label:"觀察它：我想確認它在『警告』還是在『指路』。", next:"finalGate", score:{S:2} },
+    { label:"跟它講話（很小聲也行）：我試著用互動讓氣氛降溫。", next:"finalGate", score:{G:1,N:1} },
+  ]
+},
 
     npcAsk:{
       place:"走廊的同學？",
