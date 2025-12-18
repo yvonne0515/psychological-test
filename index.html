@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>迷霧圖書館：你的冒險職分是？</title>
+  <meta name="description" content="RPG 劇情式心理測驗：通關迷霧圖書館，最後揭曉最適合的畢業專題類型。" />
+  <style>
+    :root{
+      --bg:#0b1020;
+      --panel:#111a33;
+      --card:#0f1730;
+      --text:#e7ecff;
+      --muted:#a8b3de;
+      --accent:#8dd7ff;
+      --accent2:#b4ffb7;
+      --danger:#ff7b7b;
+      --border:rgba(255,255,255,.12);
+      --shadow: 0 16px 50px rgba(0,0,0,.45);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      background: radial-gradient(1200px 700px at 20% 0%, rgba(141,215,255,.20), transparent 50%),
+                  radial-gradient(900px 600px at 80% 10%, rgba(180,255,183,.14), transparent 55%),
+                  radial-gradient(1200px 900px at 50% 100%, rgba(126,116,255,.10), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+    .app{
+      width:min(980px, 100%);
+      display:grid;
+      gap:16px;
+    }
+    header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    .title{
+      font-size: clamp(22px, 2.6vw, 34px);
+      font-weight:800;
+      letter-spacing:.5px;
+      line-height:1.1;
+    }
+    .subtitle{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.5;
+      max-width:70ch;
+    }
+    .chiprow{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .chip{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      padding:8px 10px;
+      border-radius:999px;
+      font-size:12px;
+      color:var(--muted);
+    }
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .panel-inner{ padding:18px; }
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:16px;
+    }
+    @media (max-width: 860px){
+      .grid{ grid-template-columns: 1fr; }
+      .chiprow{ justify-content:flex-start; }
+    }
+    .card{
+      background: rgba(0,0,0,.18);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding:16px;
+    }
+    .story{
+      color:var(--text);
+      line-height:1.7;
+      font-size:15px;
+      white-space:pre-wrap;
+    }
+    .kicker{
+      color: var(--accent);
+      font-weight:700;
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+    .question{
+      font-size:18px;
+      font-weight:800;
+      line-height:1.35;
+      margin:8px 0 12px;
+    }
+    .options{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:10px;
+    }
+    button.option{
+      width:100%;
+      text-align:left;
+      border-radius: 14px;
+      padding:12px 12px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      cursor:pointer;
+      transition: transform .06s ease, background .2s ease, border-color .2s ease;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+    }
+    button.option:hover{
+      background: rgba(141,215,255,.10);
+      border-color: rgba(141,215,255,.40);
+      transform: translateY(-1px);
+    }
+    .opt-tag{
+      flex:0 0 auto;
+      width:28px; height:28px;
+      border-radius:10px;
+      display:grid;
+      place-items:center;
+      font-weight:800;
+      background: rgba(141,215,255,.14);
+      border:1px solid rgba(141,215,255,.25);
+      color: var(--accent);
+    }
+    .opt-text{ line-height:1.45; }
+    .sidebar{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .progress{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:8px;
+    }
+    .bar{
+      height:10px;
+      background: rgba(255,255,255,.08);
+      border:1px solid var(--border);
+      border-radius:999px;
+      overflow:hidden;
+    }
+    .bar > div{
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, rgba(141,215,255,.95), rgba(180,255,183,.95));
+      border-radius:999px;
+      transition: width .25s ease;
+    }
+    .controls{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .btn{
+      border-radius: 12px;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      cursor:pointer;
+      transition: background .2s ease, border-color .2s ease;
+      font-weight:700;
+      font-size:13px;
+    }
+    .btn:hover{
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.22);
+    }
+    .btn.primary{
+      background: rgba(141,215,255,.14);
+      border-color: rgba(141,215,255,.40);
+      color: var(--text);
+    }
+    .btn.danger{
+      background: rgba(255,123,123,.12);
+      border-color: rgba(255,123,123,.35);
+    }
+    .small{
+      font-size:12px; color:var(--muted); line-height:1.6;
+    }
+    .result-title{
+      font-size:22px;
+      font-weight:900;
+      margin:6px 0 10px;
+    }
+    .result-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--muted);
+      font-size:12px;
+      margin-bottom:10px;
+    }
+    .badge-dot{
+      width:10px; height:10px; border-radius:50%;
+      background: rgba(141,215,255,.9);
+      box-shadow: 0 0 0 4px rgba(141,215,255,.14);
+    }
+    .result-body{
+      white-space:pre-wrap;
+      line-height:1.75;
+      color:var(--text);
+      font-size:15px;
+    }
+    .scorebox{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top:12px;
+    }
+    .scoreitem{
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.15);
+      border-radius: 14px;
+      padding:10px;
+      color:var(--muted);
+      font-size:12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .scoreitem strong{ color:var(--text); font-size:13px; }
+    .footer{
+      text-align:center;
+      color:rgba(168,179,222,.8);
+      font-size:12px;
+      margin-top:6px;
+    }
+    a{ color: var(--accent); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <header>
+      <div class="brand">
+        <div class="title">迷霧圖書館：你的冒險職分是？</div>
+        <div class="subtitle">
+          RPG 劇情式心理測驗。一路作答到最後，才會揭曉你最適合的畢業專題類型。
+          （過程不會出現「專題」等字，放心玩。）
+        </div>
+      </div>
+      <div class="chiprow">
+        <div class="chip">14 題</div>
+        <div class="chip">三選一</div>
+        <div class="chip">離線可用</div>
+      </div>
+    </header>
+
+    <div class="panel">
+      <div class="panel-inner grid">
+        <!-- main -->
+        <div class="card">
+          <div id="kicker" class="kicker">序章</div>
+          <div id="story" class="story"></div>
+
+          <div id="questionBlock" style="margin-top:14px; display:none;">
+            <div id="question" class="question"></div>
+            <div class="options" id="options"></div>
+          </div>
+
+          <div id="resultBlock" style="display:none;">
+            <div class="result-badge"><span class="badge-dot"></span><span id="resultBadgeText"></span></div>
+            <div class="result-title" id="resultTitle"></div>
+            <div class="result-body" id="resultBody"></div>
+            <div class="scorebox" id="scoreBox"></div>
+          </div>
+        </div>
+
+        <!-- sidebar -->
+        <div class="sidebar">
+          <div class="card">
+            <div class="progress">
+              <div><strong id="stepLabel" style="color:var(--text)">未開始</strong></div>
+              <div id="stepCounter">0 / 14</div>
+            </div>
+            <div class="bar"><div id="barFill"></div></div>
+
+            <div class="controls" style="margin-top:12px">
+              <button class="btn primary" id="startBtn">開始冒險</button>
+              <button class="btn" id="backBtn" disabled>上一步</button>
+              <button class="btn" id="restartBtn" disabled>重來</button>
+              <button class="btn" id="shareBtn" disabled>複製結果連結</button>
+              <button class="btn danger" id="resetUrlBtn" disabled>清除網址結果</button>
+            </div>
+
+            <div class="small" style="margin-top:10px">
+              小提示：如果你想把測驗丟到 OOOPEN Lab 或其他平台，也可以直接複製題目與結果文案使用。
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="kicker">規則</div>
+            <div class="small">
+              1) 每題選一個最像你的選項。<br/>
+              2) 別選「最正確」，選「最像你」。<br/>
+              3) 若分數平手，會用第 13 題作為決勝題。<br/>
+            </div>
+          </div>
+
+          <div class="footer">
+            made for Tamkang Japanese Dept • single-file site
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+/**
+ * 職分代碼：
+ * S 賢者 -> 學術論文
+ * P 舞台者 -> 戲劇公演
+ * C 造物師 -> 創作
+ * W 抄寫官 -> 筆譯
+ * N 交涉使 -> 口譯
+ * E 編年史家 -> 雜誌編輯
+ * G 領航員 -> 觀光導覽
+ */
+
+const INTRO = [
+`你在淡水河口旁醒來，掌心握著一枚刻有「TK」字樣的徽章。
+遠處有一座被霧包住的巨大建築——迷霧圖書館。
+
+傳說，只要通過館內的試煉，你就會得到一份「能帶你走到最後的道路」。
+
+你推開門，七道光影在大廳的天花板上旋轉：
+有人埋首抄寫古卷、有人站上舞台、有人在街巷帶路、有人用一句話就止住紛爭……
+
+館主只說了一句：
+「別想著選正確答案，選你最像的那個。」`
+];
+
+const QUESTIONS = [
+  {
+    kicker: "第一扇門",
+    story: "你走進大廳，看到七扇門，地上有地圖與告示。",
+    q: "你會先做什麼？",
+    options: [
+      { key:"A", text:"先讀完告示和地圖，搞懂規則再動", score:{S:1} },
+      { key:"B", text:"先跟其他人搭話，問問看「大家打算怎麼走」", score:{G:1} },
+      { key:"C", text:"先推一扇看起來最有趣的門，走了再說", score:{C:1} },
+    ]
+  },
+  {
+    kicker: "碎句之室",
+    story: "第一個房間：牆上滿是碎裂的句子與符號，要開門得把碎句拼回原意。",
+    q: "你會怎麼做？",
+    options: [
+      { key:"A", text:"把線索抄下來分類，慢慢推回最合理的結構", score:{W:1} },
+      { key:"B", text:"先把大意講給隊友聽，邊講邊修正", score:{N:1} },
+      { key:"C", text:"先用感覺拼一版，錯了就快速重來", score:{C:1} },
+    ]
+  },
+  {
+    kicker: "焦慮的旅人",
+    story: "你遇到一位緊張的旅人，他說「我怕我會拖累大家」。",
+    q: "你會怎麼回應？",
+    options: [
+      { key:"A", text:"用幾句話把狀況分析清楚，告訴他「你其實做得到」", score:{S:1} },
+      { key:"B", text:"先安撫他情緒，帶他一起做一小步，讓他立刻有成就感", score:{G:1} },
+      { key:"C", text:"轉移氣氛，講個笑話或演一下，讓他先放鬆", score:{P:1} },
+    ]
+  },
+  {
+    kicker: "分岔走廊",
+    story: "走廊分岔：左邊傳來喧鬧聲，右邊安靜到能聽到紙張翻動。",
+    q: "你選哪條？",
+    options: [
+      { key:"A", text:"右邊（安靜），因為你想把狀況弄懂再出手", score:{S:1} },
+      { key:"B", text:"左邊（喧鬧），因為你覺得人多的地方資訊更多", score:{G:1} },
+      { key:"C", text:"先在岔路中間觀察，等出現新線索再決定", score:{E:1} },
+    ]
+  },
+  {
+    kicker: "委託",
+    story: "你得到一份委託：把一段故事帶給城裡的人。",
+    q: "你第一反應是？",
+    options: [
+      { key:"A", text:"先確認內容每個細節是否準確，再開始整理", score:{W:1} },
+      { key:"B", text:"想像怎麼呈現會最打動人，先抓節奏與氛圍", score:{P:1} },
+      { key:"C", text:"思考要怎麼講才讓第一次聽的人也秒懂，先做版本化", score:{N:1} },
+    ]
+  },
+  {
+    kicker: "分工",
+    story: "隊伍要分工：有人負責「記錄」、有人負責「對外溝通」、有人負責「呈現」。",
+    q: "你最自然會去哪一邊？",
+    options: [
+      { key:"A", text:"記錄：把東西寫清楚、整理到可追溯", score:{E:1} },
+      { key:"B", text:"對外溝通：跟陌生人交涉、問路、協調", score:{G:1} },
+      { key:"C", text:"呈現：把內容做得有畫面、有節奏、能吸引人", score:{C:1} },
+    ]
+  },
+  {
+    kicker: "守衛",
+    story: "一位陌生守衛攔住你，語氣很衝：「你們憑什麼進去？」",
+    q: "你會怎麼處理？",
+    options: [
+      { key:"A", text:"先釐清他的顧慮，用條理說服他放行", score:{N:1} },
+      { key:"B", text:"先用友善與禮貌降溫，拉近距離再談", score:{G:1} },
+      { key:"C", text:"直接用一句漂亮的台詞（或一段演示）扭轉氣勢", score:{P:1} },
+    ]
+  },
+  {
+    kicker: "古老手稿",
+    story: "你在牆上發現一段古老手稿，很多字很難懂。",
+    q: "你比較像？",
+    options: [
+      { key:"A", text:"查資料、對照上下文，慢慢把意思弄透", score:{W:1} },
+      { key:"B", text:"先抓主旨，能講出大意就先往下推進", score:{S:1} },
+      { key:"C", text:"把它變成大家都能懂的版本：換說法、做例子、做比喻", score:{E:1} },
+    ]
+  },
+  {
+    kicker: "回音廳",
+    story: "你進入回音廳：你說的每句話都會被放大。",
+    q: "你會選擇怎麼說話？",
+    options: [
+      { key:"A", text:"精準，寧可慢一點也要正確", score:{W:1} },
+      { key:"B", text:"清楚流暢，先讓聽的人跟得上", score:{N:1} },
+      { key:"C", text:"有感染力，讓全場都被你帶進情緒", score:{P:1} },
+    ]
+  },
+  {
+    kicker: "素材",
+    story: "你拿到一組素材：文字、影像、訪談、雜訊錄音。要把它變成一個完整作品。",
+    q: "你先做哪件事？",
+    options: [
+      { key:"A", text:"建立架構：大綱、章節、邏輯順序", score:{S:1} },
+      { key:"B", text:"找主線：最能代表精神的故事核心", score:{C:1} },
+      { key:"C", text:"做版面/呈現：先讓它看起來像成品，再回頭補內容", score:{E:1} },
+    ]
+  },
+  {
+    kicker: "迷路市集",
+    story: "你被指派帶隊穿過迷路市集：路標混亂、時間緊迫，隊友開始焦躁。",
+    q: "你會？",
+    options: [
+      { key:"A", text:"停下來重新定位，快速制定最穩的路徑", score:{S:1} },
+      { key:"B", text:"一邊走一邊問路，讓隊伍保持移動、保持希望", score:{G:1} },
+      { key:"C", text:"用故事或任務口號把士氣拉起來，先穩住心再解路", score:{P:1} },
+    ]
+  },
+  {
+    kicker: "前輩紙條",
+    story: "你看到一位前輩留下的紙條：「最後一關不是考你會什麼，而是考你願不願意把它做到極致。」",
+    q: "你心裡的反應是？",
+    options: [
+      { key:"A", text:"既然要做到極致，就該訂標準、反覆打磨", score:{W:1} },
+      { key:"B", text:"極致=讓人理解與感受，所以我會把傳達做到最好", score:{N:1} },
+      { key:"C", text:"極致=把想像落地，所以我會用作品證明", score:{C:1} },
+    ]
+  },
+  {
+    kicker: "決勝呈現",
+    story: "最後一關：你必須向眾人呈現你的旅程。",
+    q: "你會選擇哪種方式？（此題也用作平手決勝）",
+    options: [
+      { key:"A", text:"以嚴謹方式說明：脈絡、證據、推論、結論", score:{S:1}, tiebreak:"S" },
+      { key:"B", text:"以互動方式呈現：對話、問答、引導大家參與", score:{G:1}, tiebreak:"G" },
+      { key:"C", text:"以舞台/影像/設計呈現：讓大家看到與感到", score:{P:1}, tiebreak:"P" },
+    ]
+  },
+  {
+    kicker: "館主最後一句",
+    story: "通關前，館主問你：「如果路上出現失控狀況，你靠什麼撐住？」",
+    q: "你靠什麼？",
+    options: [
+      { key:"A", text:"靠計畫與檢核：我知道下一步是什麼", score:{E:1} },
+      { key:"B", text:"靠溝通與協調：我能讓人一起往前", score:{N:1} },
+      { key:"C", text:"靠靈感與臨場：我能把混亂變成推進", score:{C:1} },
+    ]
+  },
+];
+
+// 結局文案：最後才揭露畢專類型
+const RESULTS = {
+  S: {
+    badge: "你點亮了「賢者」之光",
+    title: "賢者（The Scholar）",
+    body:
+`你在圖書館深處點亮一盞小燈。
+你不是靠吶喊贏的，而是靠「把每一步都想清楚」走到這裡。
+
+你擅長：
+- 把混亂整理成脈絡
+- 把直覺變成可證明的推論
+- 把問題挖到最深
+
+【最適合的畢業專題類型】學術論文
+做得漂亮的關鍵：題目聚焦、文獻耐讀、架構清楚、定期回報進度。`
+  },
+  P: {
+    badge: "你喚醒了「舞台者」的節奏",
+    title: "舞台者（The Performer）",
+    body:
+`你推開最後一扇門，光像聚光燈一樣落在你身上。
+你天生就懂「節奏」：一句話、一次停頓、一次轉身，都能讓人跟著你呼吸。
+
+你擅長：
+- 帶情緒、帶場
+- 把團隊拉到同一個頻率
+- 把壓力轉成能量
+
+【最適合的畢業專題類型】戲劇公演
+做得漂亮的關鍵：耐排練、敢溝通、能承擔責任、願意把細節磨到位。`
+  },
+  C: {
+    badge: "你獲得了「造物師」的火種",
+    title: "造物師（The Creator）",
+    body:
+`你把碎片拼成了某種只有你想得出來的形狀。
+別人問你「這到底是什麼？」你回答：「這就是我想做的世界。」
+
+你擅長：
+- 把靈感落地
+- 把概念變成作品
+- 在限制中做出新解
+
+【最適合的畢業專題類型】創作（文章／影片／企劃／作品等）
+做得漂亮的關鍵：先做出可運作的雛形、再迭代，並把過程紀錄成可展示的成果。`
+  },
+  W: {
+    badge: "你拾起了「抄寫官」的筆",
+    title: "抄寫官（The Translator of Text）",
+    body:
+`你在滿牆古卷前停下來，手指一行行滑過字。
+你不急，你在意的是「這句話真正想說什麼」。
+
+你擅長：
+- 精準、細節控
+- 反覆推敲、用詞一致
+- 把意思磨到最對的位置
+
+【最適合的畢業專題類型】翻譯（筆譯）
+做得漂亮的關鍵：選材恰當、術語一致、譯注清楚、版本管理（初稿→修訂→定稿）。`
+  },
+  N: {
+    badge: "你戴上了「交涉使」的徽記",
+    title: "交涉使（The Interpreter）",
+    body:
+`你只用幾句話，讓衝突的人都安靜下來。
+你不是把話「翻過去」而已，你把「意圖」也一起帶過去了。
+
+你擅長：
+- 即時反應、抓重點
+- 清楚流暢的口語表達
+- 在壓力下仍穩住節奏
+
+【最適合的畢業專題類型】翻譯（口譯）
+做得漂亮的關鍵：大量演練、錄音回聽、筆記系統、情境模擬（導覽／訪談／會議）。`
+  },
+  E: {
+    badge: "你展開了「編年史家」的卷軸",
+    title: "編年史家（The Editor）",
+    body:
+`你把旅程寫成一本人人看得懂、也願意翻下去的冊子。
+你在乎的不只是內容對不對，還在乎「讀者想不想看」。
+
+你擅長：
+- 主題策劃與整合
+- 修稿校對與風格一致
+- 版面與視覺呈現
+
+【最適合的畢業專題類型】雜誌編輯
+做得漂亮的關鍵：明確主題、稿件流程（採訪→撰稿→校對→排版）、死線管理、風格一致。`
+  },
+  G: {
+    badge: "你握住了「領航員」的羅盤",
+    title: "領航員（The Guide）",
+    body:
+`你帶著隊伍穿過迷路市集，最後每個人都還在、還笑得出來。
+你靠的不是運氣，是你能讓人放心：你會問、會帶、會把複雜變簡單。
+
+你擅長：
+- 路線規劃與現場控場
+- 臨場互動與跨文化說故事
+- 安撫情緒、維持隊伍節奏
+
+【最適合的畢業專題類型】觀光導覽
+做得漂亮的關鍵：導覽腳本、景點知識、互動設計、突發狀況處理、口語節奏。`
+  }
+};
+
+const ALL_CODES = ["S","P","C","W","N","E","G"];
+
+let state = {
+  started: false,
+  idx: -1,                // current question index
+  answers: [],            // {qIndex, optKey, scoreObj, tiebreak}
+  scores: initScores(),
+};
+
+function initScores(){
+  const s = {};
+  ALL_CODES.forEach(k => s[k]=0);
+  return s;
+}
+
+function applyScore(scoreObj, dir){
+  // dir = +1 or -1
+  if(!scoreObj) return;
+  for(const k in scoreObj){
+    if(!Object.prototype.hasOwnProperty.call(scoreObj,k)) continue;
+    state.scores[k] += (scoreObj[k] * dir);
+  }
+}
+
+function computeWinner(){
+  const max = Math.max(...ALL_CODES.map(k => state.scores[k]));
+  let winners = ALL_CODES.filter(k => state.scores[k] === max);
+  if(winners.length === 1) return winners[0];
+
+  // tie-break: use Q13 selection (index 12)
+  const q13 = state.answers.find(a => a.qIndex === 12);
+  if(q13 && q13.tiebreak){
+    if(winners.includes(q13.tiebreak)) return q13.tiebreak;
+  }
+  // fallback: stable order
+  return winners[0];
+}
+
+function setText(id, text){
+  document.getElementById(id).textContent = text;
+}
+function setHTML(id, html){
+  document.getElementById(id).innerHTML = html;
+}
+
+function updateProgress(){
+  const total = QUESTIONS.length;
+  const answered = Math.max(0, state.idx);
+  const current = state.started ? Math.min(state.idx+1, total) : 0;
+  setText("stepCounter", `${current} / ${total}`);
+  const pct = state.started ? (current/total)*100 : 0;
+  document.getElementById("barFill").style.width = `${pct}%`;
+  setText("stepLabel", state.started ? (state.idx < total ? `進行中` : `完成`) : "未開始");
+}
+
+function renderIntro(){
+  setText("kicker","序章");
+  setText("story", INTRO[0]);
+  document.getElementById("questionBlock").style.display = "none";
+  document.getElementById("resultBlock").style.display = "none";
+}
+
+function renderQuestion(i){
+  const q = QUESTIONS[i];
+  setText("kicker", q.kicker);
+  setText("story", q.story);
+  setText("question", q.q);
+
+  const opts = document.getElementById("options");
+  opts.innerHTML = "";
+  q.options.forEach((opt, idx) => {
+    const btn = document.createElement("button");
+    btn.className = "option";
+    btn.type = "button";
+    btn.onclick = () => chooseOption(i, opt);
+    btn.innerHTML = `
+      <div class="opt-tag">${opt.key}</div>
+      <div class="opt-text">${escapeHtml(opt.text)}</div>
+    `;
+    opts.appendChild(btn);
+  });
+
+  document.getElementById("questionBlock").style.display = "block";
+  document.getElementById("resultBlock").style.display = "none";
+}
+
+function renderResult(){
+  const winner = computeWinner();
+  const r = RESULTS[winner];
+
+  setText("kicker","終章");
+  setText("story","你走出迷霧圖書館，掌心的徽章微微發光。館主只留下一句：『走你自己的路。』");
+
+  setText("resultBadgeText", r.badge);
+  setText("resultTitle", r.title);
+  setText("resultBody", r.body);
+
+  // score breakdown
+  const box = document.getElementById("scoreBox");
+  box.innerHTML = "";
+  const pairs = ALL_CODES
+    .map(k => ({k, v: state.scores[k]}))
+    .sort((a,b)=> b.v - a.v);
+
+  pairs.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "scoreitem";
+    div.innerHTML = `<strong>${codeName(p.k)}</strong><span>${p.v}</span>`;
+    box.appendChild(div);
+  });
+
+  document.getElementById("questionBlock").style.display = "none";
+  document.getElementById("resultBlock").style.display = "block";
+
+  // update URL so user can share
+  const url = new URL(location.href);
+  url.searchParams.set("result", winner);
+  history.replaceState(null, "", url.toString());
+}
+
+function chooseOption(qIndex, opt){
+  // if revisiting and changing answer at same index, handle carefully
+  // We assume linear answering; back button handles removing previous answer.
+  applyScore(opt.score, +1);
+  state.answers.push({
+    qIndex,
+    optKey: opt.key,
+    scoreObj: opt.score,
+    tiebreak: opt.tiebreak || null
+  });
+  state.idx++;
+
+  if(state.idx >= QUESTIONS.length){
+    updateProgress();
+    renderResult();
+    enableButtonsAfterFinish();
+    return;
+  }
+  updateProgress();
+  renderQuestion(state.idx);
+  enableButtonsDuringRun();
+}
+
+function goBack(){
+  if(state.answers.length === 0) return;
+  const last = state.answers.pop();
+  // revert score
+  applyScore(last.scoreObj, -1);
+  state.idx = state.answers.length; // now at the next question index
+  // state.idx should point to question being shown
+  if(state.idx <= 0){
+    state.idx = 0;
+  }
+  updateProgress();
+  renderQuestion(state.idx);
+  enableButtonsDuringRun();
+}
+
+function start(){
+  state.started = true;
+  state.idx = 0;
+  state.answers = [];
+  state.scores = initScores();
+  updateProgress();
+  renderQuestion(0);
+  enableButtonsDuringRun();
+}
+
+function restart(){
+  // clear result param
+  const url = new URL(location.href);
+  url.searchParams.delete("result");
+  history.replaceState(null, "", url.toString());
+
+  state.started = false;
+  state.idx = -1;
+  state.answers = [];
+  state.scores = initScores();
+  updateProgress();
+  renderIntro();
+  enableButtonsBeforeStart();
+}
+
+function share(){
+  const winner = computeWinner();
+  const url = new URL(location.href);
+  url.searchParams.set("result", winner);
+  const text = url.toString();
+  navigator.clipboard?.writeText(text).then(()=>{
+    alert("已複製結果連結！");
+  }).catch(()=>{
+    prompt("請手動複製這個連結：", text);
+  });
+}
+
+function resetUrl(){
+  const url = new URL(location.href);
+  url.searchParams.delete("result");
+  history.replaceState(null, "", url.toString());
+  alert("已清除網址結果參數。");
+}
+
+function enableButtonsBeforeStart(){
+  document.getElementById("startBtn").disabled = false;
+  document.getElementById("backBtn").disabled = true;
+  document.getElementById("restartBtn").disabled = true;
+  document.getElementById("shareBtn").disabled = true;
+  document.getElementById("resetUrlBtn").disabled = true;
+}
+
+function enableButtonsDuringRun(){
+  document.getElementById("startBtn").disabled = true;
+  document.getElementById("restartBtn").disabled = false;
+  document.getElementById("shareBtn").disabled = true;
+  document.getElementById("resetUrlBtn").disabled = false;
+
+  // back enabled if at least 1 answer chosen and not finished
+  document.getElementById("backBtn").disabled = (state.answers.length === 0);
+}
+
+function enableButtonsAfterFinish(){
+  document.getElementById("startBtn").disabled = true;
+  document.getElementById("restartBtn").disabled = false;
+  document.getElementById("backBtn").disabled = false;
+  document.getElementById("shareBtn").disabled = false;
+  document.getElementById("resetUrlBtn").disabled = false;
+}
+
+function codeName(k){
+  switch(k){
+    case "S": return "S 賢者";
+    case "P": return "P 舞台者";
+    case "C": return "C 造物師";
+    case "W": return "W 抄寫官";
+    case "N": return "N 交涉使";
+    case "E": return "E 編年史家";
+    case "G": return "G 領航員";
+    default: return k;
+  }
+}
+
+function escapeHtml(str){
+  return (str ?? "").replace(/[&<>"']/g, (m) => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  }[m]));
+}
+
+// Boot
+document.getElementById("startBtn").addEventListener("click", start);
+document.getElementById("backBtn").addEventListener("click", goBack);
+document.getElementById("restartBtn").addEventListener("click", restart);
+document.getElementById("shareBtn").addEventListener("click", share);
+document.getElementById("resetUrlBtn").addEventListener("click", resetUrl);
+
+// If opened with ?result=CODE, show that result directly (shareable)
+(function initFromUrl(){
+  const url = new URL(location.href);
+  const r = url.searchParams.get("result");
+  updateProgress();
+  renderIntro();
+  enableButtonsBeforeStart();
+
+  if(r && RESULTS[r]){
+    // show result only (no scores); still present full ending + copy share
+    state.started = true;
+    state.idx = QUESTIONS.length;
+    state.scores = initScores();
+    state.scores[r] = 999; // to make winner stable
+    updateProgress();
+    renderResult();
+    enableButtonsAfterFinish();
+  }
+})();
+</script>
+</body>
+</html>
