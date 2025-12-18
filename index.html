@@ -320,7 +320,149 @@
     @keyframes float{
       0%,100%{ transform: translate(0,0); }
       50%{ transform: translate(-6px, -10px); }
-    }
+    }/* ====== UI v2：減少「卡片套卡片」、更像RPG對話框 ====== */
+
+/* 手機時把副標收起來，畫面更乾淨 */
+@media (max-width: 420px){
+  .h2{ display:none; }
+}
+
+/* 內容改成兩區：上=故事(可內捲)、下=選項(可內捲) */
+.content{
+  display: grid;
+  grid-template-rows: minmax(210px, 0.95fr) minmax(0, 1.05fr);
+  gap: 10px;
+  min-height: 0;
+  padding: 12px;
+}
+
+/* 故事區：取消外框線，變成「對話框」質感 */
+.story{
+  border: 0;
+  background: rgba(0,0,0,.22);
+  padding: 14px;
+  border-radius: 16px;
+  min-height: 0;
+}
+
+/* 違規提示：固定高度內捲，避免把整個畫面撐爆 */
+.alert{
+  max-height: 120px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 文字稍微放鬆，不要像輸入框 */
+.p{ font-size: 15.5px; line-height: 1.65; }
+.question{ font-size: 16px; line-height: 1.45; }
+.p.muted{ font-size: 12.5px; opacity: .9; }
+
+/* 選項區：自己捲動，不會把底下切掉 */
+.choices{
+  min-height: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 6px;
+}
+
+/* 選項按鈕：變薄、邊框更淡，不要那麼「厚重」 */
+.btn{
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.05);
+  border-color: rgba(255,255,255,.10);
+}
+.btn:hover{
+  background: rgba(144,210,255,.10);
+  border-color: rgba(144,210,255,.35);
+}
+
+/* A/B/C/D 圓圈縮小一點 */
+.tag{
+  width: 26px;
+  height: 26px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+/* 上方列縮一點，留更多空間給內容 */
+.topbar{ padding: 10px 12px; }
+.where .t{ font-size: 14px; }
+
+/* 底部提示縮短行高，別搶畫面 */
+.mtext{ font-size: 11px; line-height: 1.25; }
+/* ====== UI v2：減少「卡片套卡片」、更像RPG對話框 ====== */
+
+/* 手機時把副標收起來，畫面更乾淨 */
+@media (max-width: 420px){
+  .h2{ display:none; }
+}
+
+/* 內容改成兩區：上=故事(可內捲)、下=選項(可內捲) */
+.content{
+  display: grid;
+  grid-template-rows: minmax(210px, 0.95fr) minmax(0, 1.05fr);
+  gap: 10px;
+  min-height: 0;
+  padding: 12px;
+}
+
+/* 故事區：取消外框線，變成「對話框」質感 */
+.story{
+  border: 0;
+  background: rgba(0,0,0,.22);
+  padding: 14px;
+  border-radius: 16px;
+  min-height: 0;
+}
+
+/* 違規提示：固定高度內捲，避免把整個畫面撐爆 */
+.alert{
+  max-height: 120px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 文字稍微放鬆，不要像輸入框 */
+.p{ font-size: 15.5px; line-height: 1.65; }
+.question{ font-size: 16px; line-height: 1.45; }
+.p.muted{ font-size: 12.5px; opacity: .9; }
+
+/* 選項區：自己捲動，不會把底下切掉 */
+.choices{
+  min-height: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 6px;
+}
+
+/* 選項按鈕：變薄、邊框更淡，不要那麼「厚重」 */
+.btn{
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.05);
+  border-color: rgba(255,255,255,.10);
+}
+.btn:hover{
+  background: rgba(144,210,255,.10);
+  border-color: rgba(144,210,255,.35);
+}
+
+/* A/B/C/D 圓圈縮小一點 */
+.tag{
+  width: 26px;
+  height: 26px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+/* 上方列縮一點，留更多空間給內容 */
+.topbar{ padding: 10px 12px; }
+.where .t{ font-size: 14px; }
+
+/* 底部提示縮短行高，別搶畫面 */
+.mtext{ font-size: 11px; line-height: 1.25; }
+
   </style>
 </head>
 
