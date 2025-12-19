@@ -320,14 +320,11 @@
     @keyframes float{
       0%,100%{ transform: translate(0,0); }
       50%{ transform: translate(-6px, -10px); }
-    }/* ====== UI v2：減少「卡片套卡片」、更像RPG對話框 ====== */
-
-/* 手機時把副標收起來，畫面更乾淨 */
+    }
 @media (max-width: 420px){
   .h2{ display:none; }
 }
 
-/* 內容改成兩區：上=故事(可內捲)、下=選項(可內捲) */
 .content{
   display: grid;
   grid-template-rows: minmax(210px, 0.95fr) minmax(0, 1.05fr);
@@ -336,7 +333,7 @@
   padding: 12px;
 }
 
-/* 故事區：取消外框線，變成「對話框」質感 */
+
 .story{
   border: 0;
   background: rgba(0,0,0,.22);
@@ -345,19 +342,19 @@
   min-height: 0;
 }
 
-/* 違規提示：固定高度內捲，避免把整個畫面撐爆 */
+
 .alert{
   max-height: 120px;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-/* 文字稍微放鬆，不要像輸入框 */
+
 .p{ font-size: 15.5px; line-height: 1.65; }
 .question{ font-size: 16px; line-height: 1.45; }
 .p.muted{ font-size: 12.5px; opacity: .9; }
 
-/* 選項區：自己捲動，不會把底下切掉 */
+
 .choices{
   min-height: 0;
   overflow: auto;
@@ -365,7 +362,7 @@
   padding-bottom: 6px;
 }
 
-/* 選項按鈕：變薄、邊框更淡，不要那麼「厚重」 */
+
 .btn{
   padding: 12px 14px;
   border-radius: 14px;
@@ -377,7 +374,7 @@
   border-color: rgba(144,210,255,.35);
 }
 
-/* A/B/C/D 圓圈縮小一點 */
+
 .tag{
   width: 26px;
   height: 26px;
@@ -385,20 +382,18 @@
   font-size: 12px;
 }
 
-/* 上方列縮一點，留更多空間給內容 */
+
 .topbar{ padding: 10px 12px; }
 .where .t{ font-size: 14px; }
 
-/* 底部提示縮短行高，別搶畫面 */
+
 .mtext{ font-size: 11px; line-height: 1.25; }
-/* ====== UI v2：減少「卡片套卡片」、更像RPG對話框 ====== */
 
-/* 手機時把副標收起來，畫面更乾淨 */
 @media (max-width: 420px){
   .h2{ display:none; }
 }
 
-/* 內容改成兩區：上=故事(可內捲)、下=選項(可內捲) */
+
 .content{
   display: grid;
   grid-template-rows: minmax(210px, 0.95fr) minmax(0, 1.05fr);
@@ -407,7 +402,7 @@
   padding: 12px;
 }
 
-/* 故事區：取消外框線，變成「對話框」質感 */
+
 .story{
   border: 0;
   background: rgba(0,0,0,.22);
@@ -416,19 +411,19 @@
   min-height: 0;
 }
 
-/* 違規提示：固定高度內捲，避免把整個畫面撐爆 */
+
 .alert{
   max-height: 120px;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-/* 文字稍微放鬆，不要像輸入框 */
+
 .p{ font-size: 15.5px; line-height: 1.65; }
 .question{ font-size: 16px; line-height: 1.45; }
 .p.muted{ font-size: 12.5px; opacity: .9; }
 
-/* 選項區：自己捲動，不會把底下切掉 */
+
 .choices{
   min-height: 0;
   overflow: auto;
@@ -436,7 +431,7 @@
   padding-bottom: 6px;
 }
 
-/* 選項按鈕：變薄、邊框更淡，不要那麼「厚重」 */
+
 .btn{
   padding: 12px 14px;
   border-radius: 14px;
@@ -448,7 +443,7 @@
   border-color: rgba(144,210,255,.35);
 }
 
-/* A/B/C/D 圓圈縮小一點 */
+
 .tag{
   width: 26px;
   height: 26px;
@@ -456,11 +451,11 @@
   font-size: 12px;
 }
 
-/* 上方列縮一點，留更多空間給內容 */
+
 .topbar{ padding: 10px 12px; }
 .where .t{ font-size: 14px; }
 
-/* 底部提示縮短行高，別搶畫面 */
+
 .mtext{ font-size: 11px; line-height: 1.25; }
 
 /* ===== Result Page: 大展示 ===== */
@@ -505,7 +500,7 @@
   .rbody{ font-size: 16px; }
 }
 
-/* 結果頁按鈕做大一點 */
+
 .result .mbtn{
   padding: 12px 12px;
   border-radius: 14px;
@@ -634,11 +629,11 @@
     },
 
     knownRules: new Set(),   // 你已經「知道」的規則才算真的違規
-    haunt: 0,                // 違規/事件累積值：越高越毛
+    haunt: 0,                // 違規/事件累積值
     lastConsequence: null    // 當下違規就立刻顯示
   };
 
-  // ✅ 18 題固定：每一步一個節點
+  // 18 題固定：每一步一個節點
   // 每個 choice 可以：
   // - score: 加分到 7 類型
   // - setFlags: 設定玩家行為
@@ -733,11 +728,11 @@ photoLine +
 
     s4:{
       idx:4,
-      place:"文化教室｜半開門",
+      place:"外語大樓｜半開門",
       story:
 `你走到文化教室那排。\n一間教室門半開，裡面有人在上課——而且是日文。\n座位背影全都坐得很端正，反而更不真實。\n\n講台上的聲音忽然停了一秒，像在聽你有沒有靠近。`,
       question:"你會怎麼做？",
-      hint:"這題重點是：你會不會『確認』。",
+      hint:"你會不會大膽的『確認』。",
       choices:[
         {label:"先觀察5秒：我想確定是不是有人拍片或惡作劇。", next:"s5", score:{R:1,WT:1}},
         {label:"我直接離開：不該看的不看。", next:"s5", score:{G:1}},
@@ -789,7 +784,7 @@ extra+
         );
       },
       question:"此刻你最像哪種反應？",
-      hint:"這題很真實：你會先安撫自己？還是先處理現實？",
+      hint:"你會先安撫自己？還是先處理現實？",
       choices:[
         {label:"先把路線弄清楚：我看出口、樓層、再決定往哪走。", next:"s7", score:{R:1,G:1}, learnRules:["NO_FINE"]},
         {label:"先傳訊息：報備『我還在學校裡』但不講任務。", next:"s7", score:{G:1,IT:1}, learnRules:["NO_FINE"]},
@@ -823,7 +818,7 @@ extra+
       story:
 `你不得不去廁所。\n洗手台鏡子裡，你看見最後一間隔間下面有一雙腳。\n你很確定：你進來時這裡是空的。\n隔間門慢慢開了一條縫。\n\n你知道：如果你「確認」那是誰，事情通常會變糟。`,
       question:"你會怎麼做？",
-      hint:"不要當英雄，選你真的會做的。",
+      hint:"這可不是廁所裡的花子喔ＸＤ",
       choices:[
         {label:"裝沒看到：立刻走出廁所，不逗留。", next:"s9", score:{G:1}},
         {label:"拿東西當武器：拖把/垃圾桶，壯膽吼一句。", next:"s9", score:{T:1}},
@@ -853,7 +848,7 @@ extra+
       story:
 `你終於走到戶外。\n遠處有一點點光，像校門警衛室（值班室）那邊。\n但你還在校園內。\n你突然想到：如果你想放棄，會不會門真的打不開？`,
       question:"你會怎麼做？",
-      hint:"這題關鍵是：你相信規則嗎？",
+      hint:"你相信規則嗎？",
       choices:[
         {label:"先去值班室方向：至少那邊比較亮。", next:"s11", score:{G:1,R:1}},
         {label:"不去，照原路：我不想被引導。", next:"s11", score:{WT:1,R:1}},
@@ -883,7 +878,7 @@ extra+
       story:
 `你走了很久，腳底有點麻。\n商管大樓的電梯還亮著。\n你進去按五樓，電梯門卻打開到一個「沒有樓層顯示」的黑走廊。\n\n你已經知道：很多怪事都是從「踏出那一步」開始。`,
       question:"你會怎麼做？",
-      hint:"很現實：你敢不敢踏出去？",
+      hint:"你敢不敢踏出去？",
       choices:[
         {label:"絕不出去：猛按關門＋按回一樓。", next:"s13", score:{WT:1,G:1}},
         {label:"踏出一步看一下：我只出去一步，隨時縮回來。", next:"s13", score:{C:1,T:1}},
@@ -898,7 +893,7 @@ extra+
       story:
 `你又走了一大段路。\n霧淡了些，你才意識到自己已經離宮燈大道很遠了。\n前方那個熟悉的黑天鵝雕像終於出現。\n\n雕像旁的地上有一張照片——像是你剛剛相簿裡黑掉的那張「掉」出來的。`,
       question:"你會怎麼處理這張照片？",
-      hint:"只有你『真的拍過照』，這題才會特別刺。",
+      hint:"就是遇到宮燈姊姊那時候，黑掉的照片",
       choices:[
         {label:"我不撿：我繞過去，不碰任何東西。", next:"s14", score:{WT:1,G:1}},
         {label:"我撿起來看：但我不在這裡打開相簿。", next:"s14", score:{R:1,E:1}},
@@ -948,7 +943,7 @@ extra+
       story:
 `你到了一個開闊的廣場。\n遠處有一道背影站著不動，像老式制服。\n你靠近一點，背影沒有回頭。\n\n你已經知道：不要確認身份。\n而你也記得宮燈那條：不要回頭、不要報時間。`,
       question:"你會怎麼做？",
-      hint:"尊重、溝通、觀察、或蒐證（小心閃光）。",
+      hint:"尊重、溝通、觀察、或蒐證。",
       choices:[
         {label:"鞠躬致意：不問身份，只說『打擾了』。", next:"s17", score:{G:1,WT:1}},
         {label:"嘗試溝通：『你需要幫忙嗎？』不問你是誰。", next:"s17", score:{IT:1,G:1}},
